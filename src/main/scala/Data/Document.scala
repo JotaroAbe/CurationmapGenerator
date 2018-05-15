@@ -14,7 +14,7 @@ case class Document (fragList : mutable.MutableList[Fragment], docNum : Int){
     var ret :String = ""
     fragList.foreach{
       frag =>
-        ret += frag.getText()
+        ret += frag.getText() +"\n"
     }
     ret
   }
