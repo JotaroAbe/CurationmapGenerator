@@ -4,7 +4,7 @@
 		module="curationmapgenerator_2.12"
 		revision="0.1"
 		status="integration"
-		publication="20180513223655"
+		publication="20180515181404"
 	>
 		<description>
 		CurationmapGenerator
@@ -33,5 +33,6 @@
 		<dependency org="org.scala-lang" name="scala-compiler" rev="2.12.6" conf="scala-tool->default,optional(default)"/>
 		<dependency org="org.scala-lang" name="scala-library" rev="2.12.6" conf="scala-tool->default,optional(default);compile->default(compile)"/>
 		<dependency org="org.chasen.mecab" name="mecab-java" rev="0.993" conf="compile->default(compile)"/>
+		<dependency org="org.jsoup" name="jsoup" rev="1.11.3" conf="compile->default(compile)"/>
 	</dependencies>
 </ivy-module>

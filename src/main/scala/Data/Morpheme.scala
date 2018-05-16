@@ -1,3 +1,5 @@
+package Data
+
 
 
 case class Morpheme(word: String, morph : String) {

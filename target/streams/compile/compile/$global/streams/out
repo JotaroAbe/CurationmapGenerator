@@ -1,10 +1,4 @@
-[0m[[0m[31merror[0m] [0m[0m/home/usagiramen/IdeaProjects/CurationmapGenerator/src/main/scala/Main.scala:2:12: object chasen is not a member of package org[0m
-[0m[[0m[31merror[0m] [0m[0mimport org.chasen.mecab.Tagger[0m
-[0m[[0m[31merror[0m] [0m[0m           ^[0m
-[0m[[0m[31merror[0m] [0m[0m/home/usagiramen/IdeaProjects/CurationmapGenerator/src/main/scala/Main.scala:3:12: object chasen is not a member of package org[0m
-[0m[[0m[31merror[0m] [0m[0mimport org.chasen.mecab.MeCab[0m
-[0m[[0m[31merror[0m] [0m[0m           ^[0m
-[0m[[0m[31merror[0m] [0m[0m/home/usagiramen/IdeaProjects/CurationmapGenerator/src/main/scala/Main.scala:9:24: not found: type Tagger[0m
-[0m[[0m[31merror[0m] [0m[0m      var tagger = new Tagger()[0m
-[0m[[0m[31merror[0m] [0m[0m                       ^[0m
-[0m[[0m[31merror[0m] [0m[0mthree errors found[0m
+[0m[[0m[31merror[0m] [0m[0m/home/usagiramen/IdeaProjects/CurationmapGenerator/src/main/scala/Main.scala:10:62: ';' expected but ',' found.[0m
+[0m[[0m[31merror[0m] [0m[0m    val l = List{"http://icserv01.forest.eis.ynu.ac.jp/?p=50","https://docs.oracle.com/javase/jp/7/api/java/util/HashSet.html"}[0m
+[0m[[0m[31merror[0m] [0m[0m                                                             ^[0m
+[0m[[0m[31merror[0m] [0m[0mone error found[0m

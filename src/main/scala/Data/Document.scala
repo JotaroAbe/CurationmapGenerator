@@ -1,3 +1,5 @@
+package Data
+
 import scala.collection.mutable
 
 case class Document (fragList : mutable.MutableList[Fragment], docNum : Int){

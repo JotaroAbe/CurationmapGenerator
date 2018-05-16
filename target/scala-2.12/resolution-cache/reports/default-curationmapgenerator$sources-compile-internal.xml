@@ -7,8 +7,20 @@
 		revision="0.1"
 		conf="compile-internal"
 		confs="compile, runtime, test, provided, optional, compile-internal, runtime-internal, test-internal, plugin, pom, scala-tool"
-		date="20180514210527"/>
+		date="20180515231611"/>
 	<dependencies>
+		<module organisation="org.jsoup" name="jsoup">
+			<revision name="1.11.3" status="release" pubdate="20180416072107" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://jsoup.org/" downloaded="false" searched="false" default="false" conf="default, compile, runtime, default(compile), master" position="2">
+				<license name="The MIT License" url="https://jsoup.org/license"/>
+				<metadata-artifact status="no" details="" size="3764" time="0" location="/home/usagiramen/.ivy2/cache/org.jsoup/jsoup/ivy-1.11.3.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/jsoup/jsoup/1.11.3/jsoup-1.11.3.pom"/>
+				<caller organisation="default" name="curationmapgenerator$sources" conf="compile-internal, compile, provided, optional" rev="1.11.3" rev-constraint-default="1.11.3" rev-constraint-dynamic="1.11.3" callerrev="0.1"/>
+				<artifacts>
+					<artifact name="jsoup" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="184000" time="0" location="/home/usagiramen/.ivy2/cache/org.jsoup/jsoup/srcs/jsoup-1.11.3-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/jsoup/jsoup/1.11.3/jsoup-1.11.3-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
 		<module organisation="org.chasen.mecab" name="mecab-java">
 			<revision name="0.993" status="release" pubdate="20121001055745" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://mecab.googlecode.com/svn/trunk/mecab/doc/index.html" downloaded="false" searched="false" default="false" conf="default, compile, runtime, default(compile), master" position="1">
 				<license name="BSD License" url="http://mecab.googlecode.com/svn/trunk/mecab/BSD"/>

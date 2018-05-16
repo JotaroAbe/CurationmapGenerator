@@ -7,17 +7,29 @@
 		revision="0.1"
 		conf="test"
 		confs="compile, runtime, test, provided, optional, compile-internal, runtime-internal, test-internal, plugin, pom, scala-tool"
-		date="20180513223655"/>
+		date="20180515181404"/>
 	<dependencies>
+		<module organisation="org.jsoup" name="jsoup">
+			<revision name="1.11.3" status="release" pubdate="20180416072107" resolver="public" artresolver="public" homepage="https://jsoup.org/" downloaded="true" searched="true" default="false" conf="default, compile, runtime, default(compile), master" position="2">
+				<license name="The MIT License" url="https://jsoup.org/license"/>
+				<metadata-artifact status="successful" details="" size="8322" time="548" location="/home/usagiramen/.ivy2/cache/org.jsoup/jsoup/ivy-1.11.3.xml" searched="true" original-local-location="/home/usagiramen/.ivy2/cache/org.jsoup/jsoup/ivy-1.11.3.xml.original" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/jsoup/jsoup/1.11.3/jsoup-1.11.3.pom"/>
+				<caller organisation="default" name="curationmapgenerator_2.12" conf="test, compile, runtime" rev="1.11.3" rev-constraint-default="1.11.3" rev-constraint-dynamic="1.11.3" callerrev="0.1"/>
+				<artifacts>
+					<artifact name="jsoup" type="jar" ext="jar" status="successful" details="" size="395748" time="1219" location="/home/usagiramen/.ivy2/cache/org.jsoup/jsoup/jars/jsoup-1.11.3.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/jsoup/jsoup/1.11.3/jsoup-1.11.3.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
 		<module organisation="org.chasen.mecab" name="mecab-java">
-			<revision name="0.993" status="release" pubdate="20121001055745" resolver="public" artresolver="public" homepage="http://mecab.googlecode.com/svn/trunk/mecab/doc/index.html" downloaded="true" searched="true" default="false" conf="default, compile, runtime, default(compile), master" position="1">
+			<revision name="0.993" status="release" pubdate="20121001055745" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://mecab.googlecode.com/svn/trunk/mecab/doc/index.html" downloaded="false" searched="false" default="false" conf="default, compile, runtime, default(compile), master" position="1">
 				<license name="BSD License" url="http://mecab.googlecode.com/svn/trunk/mecab/BSD"/>
 				<license name="GNU Lesser General Public License" url="http://www.gnu.org/licenses/lgpl.txt"/>
 				<license name="GNU Lesser General Public License" url="http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt"/>
-				<metadata-artifact status="successful" details="" size="1573" time="560" location="/home/usagiramen/.ivy2/cache/org.chasen.mecab/mecab-java/ivy-0.993.xml" searched="true" original-local-location="/home/usagiramen/.ivy2/cache/org.chasen.mecab/mecab-java/ivy-0.993.xml.original" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/chasen/mecab/mecab-java/0.993/mecab-java-0.993.pom"/>
+				<metadata-artifact status="no" details="" size="3006" time="0" location="/home/usagiramen/.ivy2/cache/org.chasen.mecab/mecab-java/ivy-0.993.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/chasen/mecab/mecab-java/0.993/mecab-java-0.993.pom"/>
 				<caller organisation="default" name="curationmapgenerator_2.12" conf="test, compile, runtime" rev="0.993" rev-constraint-default="0.993" rev-constraint-dynamic="0.993" callerrev="0.1"/>
 				<artifacts>
-					<artifact name="mecab-java" type="jar" ext="jar" status="successful" details="" size="12022" time="677" location="/home/usagiramen/.ivy2/cache/org.chasen.mecab/mecab-java/jars/mecab-java-0.993.jar">
+					<artifact name="mecab-java" type="jar" ext="jar" status="no" details="" size="12022" time="0" location="/home/usagiramen/.ivy2/cache/org.chasen.mecab/mecab-java/jars/mecab-java-0.993.jar">
 						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/chasen/mecab/mecab-java/0.993/mecab-java-0.993.jar"/>
 					</artifact>
 				</artifacts>
