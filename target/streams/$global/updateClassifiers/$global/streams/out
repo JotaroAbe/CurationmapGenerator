@@ -655,7 +655,7 @@
 [debug] including url: jar:file:/home/usagiramen/.sbt/boot/scala-2.12.6/org.scala-sbt/sbt/1.1.5/ivy-2.3.0-sbt-b18f59ea3bc914a297bb6f1a4f7fb0ace399e310.jar!/org/apache/ivy/core/settings/ivysettings-local.xml
 [debug] including url: jar:file:/home/usagiramen/.sbt/boot/scala-2.12.6/org.scala-sbt/sbt/1.1.5/ivy-2.3.0-sbt-b18f59ea3bc914a297bb6f1a4f7fb0ace399e310.jar!/org/apache/ivy/core/settings/ivysettings-main-chain.xml
 [debug] including url: jar:file:/home/usagiramen/.sbt/boot/scala-2.12.6/org.scala-sbt/sbt/1.1.5/ivy-2.3.0-sbt-b18f59ea3bc914a297bb6f1a4f7fb0ace399e310.jar!/org/apache/ivy/core/settings/ivysettings-default-chain.xml
-[debug] settings loaded (84ms)
+[debug] settings loaded (56ms)
 [debug] 	default cache: /home/usagiramen/.ivy2/cache
 [debug] 	default resolver: default
 [debug] 	-- 5 resolvers:
@@ -670,7 +670,7 @@
 [debug] 	[NOT REQUIRED] org.scala-lang.modules#scala-xml_2.12;1.0.6!scala-xml_2.12.jar(src)
 [debug] 	[NOT REQUIRED] jline#jline;2.14.6!jline.jar(src)
 [debug] 	[NOT REQUIRED] org.scala-lang#scala-reflect;2.12.6!scala-reflect.jar(src)
-[debug] :: resolution report :: resolve 1133ms :: artifacts dl 144ms
+[debug] :: resolution report :: resolve 1137ms :: artifacts dl 170ms
 [debug] 	report for default#curationmapgenerator$sources;0.1 compile produced in /home/usagiramen/IdeaProjects/CurationmapGenerator/target/scala-2.12/resolution-cache/reports/default-curationmapgenerator$sources-compile.xml
 [debug] 	report for default#curationmapgenerator$sources;0.1 runtime produced in /home/usagiramen/IdeaProjects/CurationmapGenerator/target/scala-2.12/resolution-cache/reports/default-curationmapgenerator$sources-runtime.xml
 [debug] 	report for default#curationmapgenerator$sources;0.1 test produced in /home/usagiramen/IdeaProjects/CurationmapGenerator/target/scala-2.12/resolution-cache/reports/default-curationmapgenerator$sources-test.xml
@@ -682,4 +682,4 @@
 [debug] 	report for default#curationmapgenerator$sources;0.1 plugin produced in /home/usagiramen/IdeaProjects/CurationmapGenerator/target/scala-2.12/resolution-cache/reports/default-curationmapgenerator$sources-plugin.xml
 [debug] 	report for default#curationmapgenerator$sources;0.1 pom produced in /home/usagiramen/IdeaProjects/CurationmapGenerator/target/scala-2.12/resolution-cache/reports/default-curationmapgenerator$sources-pom.xml
 [debug] 	report for default#curationmapgenerator$sources;0.1 scala-tool produced in /home/usagiramen/IdeaProjects/CurationmapGenerator/target/scala-2.12/resolution-cache/reports/default-curationmapgenerator$sources-scala-tool.xml
-[debug] 	resolve done (1133ms resolve - 144ms download)
+[debug] 	resolve done (1137ms resolve - 170ms download)

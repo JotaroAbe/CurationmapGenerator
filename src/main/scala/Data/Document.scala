@@ -2,7 +2,7 @@ package Data
 
 import scala.collection.mutable
 
-case class Document (fragList : mutable.MutableList[Fragment], docNum : Int){
+case class Document (fragList : mutable.MutableList[Fragment], docNum : Int) extends MapNode {
   val initHub : Double = 1
   val initAuth : Double = 1
   var preHub : Double = initHub
@@ -19,5 +19,8 @@ case class Document (fragList : mutable.MutableList[Fragment], docNum : Int){
         ret += frag.getText() +"\n"
     }
     ret
+  }
+  def toNode(): MapNode={
+    this.asInstanceOf[MapNode]
   }
 }

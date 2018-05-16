@@ -3,7 +3,7 @@ package Data
 import scala.collection.immutable.List
 import scala.collection.mutable
 
-case class Fragment (morphList: List[Morpheme]){
+case class Fragment (morphList: List[Morpheme]) extends MapNode {
 
   def getText(): String ={
     var ret :String = ""
@@ -25,5 +25,8 @@ case class Fragment (morphList: List[Morpheme]){
     }
 
     nounList.toList
+  }
+  def toNode(): MapNode={
+    this.asInstanceOf[MapNode]
   }
 }

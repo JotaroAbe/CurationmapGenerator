@@ -1,4 +1,4 @@
-[0m[[0m[31merror[0m] [0m[0m/home/usagiramen/IdeaProjects/CurationmapGenerator/src/main/scala/Main.scala:10:62: ';' expected but ',' found.[0m
-[0m[[0m[31merror[0m] [0m[0m    val l = List{"http://icserv01.forest.eis.ynu.ac.jp/?p=50","https://docs.oracle.com/javase/jp/7/api/java/util/HashSet.html"}[0m
-[0m[[0m[31merror[0m] [0m[0m                                                             ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/usagiramen/IdeaProjects/CurationmapGenerator/src/main/scala/Data/InclusiveLink.scala:5:5: constructor invokes itself[0m
+[0m[[0m[31merror[0m] [0m[0m    this(init, dest)[0m
+[0m[[0m[31merror[0m] [0m[0m    ^[0m
 [0m[[0m[31merror[0m] [0m[0mone error found[0m
