@@ -1,4 +1,6 @@
-import Data.{CurationMap, Document, Fragment, Morpheme}
+package util
+
+import data.{CurationMap, Document, Fragment, Morpheme}
 import org.chasen.mecab.{Node, Tagger}
 
 import scala.collection.mutable

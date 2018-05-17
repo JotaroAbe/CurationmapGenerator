@@ -1,10 +1,10 @@
-package Data
+package data
 
 import scala.collection.mutable
 
 case class CurationMap(documents : Set[Document]) {
 
-  val links = mutable.MutableList.empty[InclusiveLink]
+  val links: mutable.MutableList[InclusiveLink] = mutable.MutableList.empty[InclusiveLink]
 
   val ALPHA : Double = 0.6
 
@@ -17,7 +17,7 @@ case class CurationMap(documents : Set[Document]) {
             documents.foreach{
               destDoc=>
                 val inclusiveScore : Double= frag.calcInclusive(destDoc)
-                if(inclusiveScore > ALPHA){
+                if(inclusiveScore > ALPHA){//自分を見ないことが必要
                   links += InclusiveLink(frag, destDoc)
                 }
             }

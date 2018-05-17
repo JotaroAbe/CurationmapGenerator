@@ -1,4 +1,4 @@
-package Data
+package data
 
 import scala.collection.immutable.List
 

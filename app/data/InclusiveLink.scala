@@ -1,4 +1,4 @@
-package Data
+package data
 
 case class InclusiveLink(init : MapNode, dest : MapNode){
 
@@ -7,6 +7,10 @@ case class InclusiveLink(init : MapNode, dest : MapNode){
   }
   def this(init : Fragment, dest : Document) ={
     this(init.toNode(), dest.toNode())
+  }
+
+  override def toString: String = {
+    s"${init.getText()} -> ${dest.getText()}"
   }
 
 }

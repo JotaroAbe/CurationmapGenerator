@@ -1,5 +1,6 @@
+package util
+
 import org.jsoup._
-import scala.io.{BufferedSource, Source}
 
 case class GetterFromWeb(url : String){
 
