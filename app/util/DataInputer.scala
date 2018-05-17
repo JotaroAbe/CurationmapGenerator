@@ -11,7 +11,7 @@ case class DataInputer(sourceList : List[String]){
 
   sourceList.foreach {
     source =>
-      //-Djava.library.path=/usr/lib/jni
+      //要変更
       System.loadLibrary("MeCab")
       val tagger = new Tagger()
       val str: String = GetterFromWeb(source).getInput
