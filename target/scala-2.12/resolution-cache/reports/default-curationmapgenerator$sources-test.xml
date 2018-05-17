@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="ivy-report.xsl"?>
+<ivy-report version="1.0">
+	<info
+		organisation="default"
+		module="curationmapgenerator$sources"
+		revision="0.1"
+		conf="test"
+		confs="compile, runtime, test, provided, optional, compile-internal, runtime-internal, test-internal, plugin, pom, scala-tool"
+		date="20180517122144"/>
+	<dependencies>
+		<module organisation="org.jsoup" name="jsoup">
+			<revision name="1.11.3" status="release" pubdate="20180416072107" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://jsoup.org/" downloaded="false" searched="false" default="false" conf="default, compile, runtime, default(compile), master" position="2">
+				<license name="The MIT License" url="https://jsoup.org/license"/>
+				<metadata-artifact status="no" details="" size="3764" time="0" location="/home/usagiramen/.ivy2/cache/org.jsoup/jsoup/ivy-1.11.3.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/jsoup/jsoup/1.11.3/jsoup-1.11.3.pom"/>
+				<caller organisation="default" name="curationmapgenerator$sources" conf="test, compile, runtime" rev="1.11.3" rev-constraint-default="1.11.3" rev-constraint-dynamic="1.11.3" callerrev="0.1"/>
+				<artifacts>
+					<artifact name="jsoup" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="184000" time="0" location="/home/usagiramen/.ivy2/cache/org.jsoup/jsoup/srcs/jsoup-1.11.3-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/jsoup/jsoup/1.11.3/jsoup-1.11.3-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.chasen.mecab" name="mecab-java">
+			<revision name="0.993" status="release" pubdate="20121001055745" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://mecab.googlecode.com/svn/trunk/mecab/doc/index.html" downloaded="false" searched="false" default="false" conf="default, compile, runtime, default(compile), master" position="1">
+				<license name="BSD License" url="http://mecab.googlecode.com/svn/trunk/mecab/BSD"/>
+				<license name="GNU Lesser General Public License" url="http://www.gnu.org/licenses/lgpl.txt"/>
+				<license name="GNU Lesser General Public License" url="http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt"/>
+				<metadata-artifact status="no" details="" size="3006" time="0" location="/home/usagiramen/.ivy2/cache/org.chasen.mecab/mecab-java/ivy-0.993.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/chasen/mecab/mecab-java/0.993/mecab-java-0.993.pom"/>
+				<caller organisation="default" name="curationmapgenerator$sources" conf="test, compile, runtime" rev="0.993" rev-constraint-default="0.993" rev-constraint-dynamic="0.993" callerrev="0.1"/>
+				<artifacts>
+					<artifact name="mecab-java" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="39009" time="0" location="/home/usagiramen/.ivy2/cache/org.chasen.mecab/mecab-java/srcs/mecab-java-0.993-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/chasen/mecab/mecab-java/0.993/mecab-java-0.993-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.scala-lang" name="scala-library">
+			<revision name="2.12.6" status="release" pubdate="20180427014006" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://www.scala-lang.org/" extra-info.apiURL="http://www.scala-lang.org/api/2.12.6/" downloaded="false" searched="false" default="false" conf="default, compile, runtime, default(compile), master" position="0">
+				<license name="BSD 3-Clause" url="http://www.scala-lang.org/license.html"/>
+				<metadata-artifact status="no" details="" size="2471" time="0" location="/home/usagiramen/.ivy2/cache/org.scala-lang/scala-library/ivy-2.12.6.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/scala-lang/scala-library/2.12.6/scala-library-2.12.6.pom"/>
+				<caller organisation="default" name="curationmapgenerator$sources" conf="test, compile, runtime" rev="2.12.6" rev-constraint-default="2.12.6" rev-constraint-dynamic="2.12.6" callerrev="0.1" extra-info.apiURL="http://www.scala-lang.org/api/2.12.6/"/>
+				<artifacts>
+					<artifact name="scala-library" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="992293" time="0" location="/home/usagiramen/.ivy2/cache/org.scala-lang/scala-library/srcs/scala-library-2.12.6-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/scala-lang/scala-library/2.12.6/scala-library-2.12.6-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+	</dependencies>
+</ivy-report>

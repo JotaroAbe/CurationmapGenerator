@@ -12,7 +12,7 @@ case class Document (fragList : mutable.MutableList[Fragment], docNum : Int) ext
   var linkedFrag : Int = 0
   var totalFrag : Int = 0
 
-  def getText(): String ={
+  override def getText(): String ={
     var ret :String = ""
     fragList.foreach{
       frag =>
@@ -22,5 +22,15 @@ case class Document (fragList : mutable.MutableList[Fragment], docNum : Int) ext
   }
   def toNode(): MapNode={
     this.asInstanceOf[MapNode]
+  }
+
+  override def getNounList(): List[String] = {
+    var nounList = List.empty[String]
+
+    fragList.foreach{
+      frag=>
+        nounList =  nounList ++ frag.getNounList()
+    }
+    nounList
   }
 }

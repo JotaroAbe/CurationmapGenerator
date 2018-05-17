@@ -1,5 +1,4 @@
 import Data.InclusiveLink
-import org.chasen.mecab.MeCab
 
 object Main {
   def main(args: Array[String]): Unit = {
@@ -10,10 +9,5 @@ object Main {
 
     //println(DataInputer("http://icserv01.forest.eis.ynu.ac.jp/?p=50").getInput)
   }
-
-
-
-
-
 
 }

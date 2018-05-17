@@ -5,7 +5,7 @@ import scala.collection.mutable
 
 case class Fragment (morphList: List[Morpheme]) extends MapNode {
 
-  def getText(): String ={
+  override def getText(): String ={
     var ret :String = ""
     morphList.foreach{
       morph =>
@@ -14,7 +14,7 @@ case class Fragment (morphList: List[Morpheme]) extends MapNode {
     ret
   }
 
-  def getnounList(): List[String]={
+  override def getNounList(): List[String]={
     val nounList = mutable.MutableList.empty[String]
 
     morphList.foreach{
@@ -26,7 +26,22 @@ case class Fragment (morphList: List[Morpheme]) extends MapNode {
 
     nounList.toList
   }
+
   def toNode(): MapNode={
     this.asInstanceOf[MapNode]
+  }
+
+  def calcInclusive(destNode :MapNode) : Double={
+    val nounNum :Int= getNounList().length
+    var inclusiveNum : Int= 0
+
+    getNounList().foreach{
+      initNoun=>
+        if(destNode.getNounList().contains(initNoun)){
+          inclusiveNum += 1
+        }
+    }
+
+    nounNum.toDouble / inclusiveNum.toDouble
   }
 }
