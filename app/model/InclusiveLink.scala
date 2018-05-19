@@ -1,4 +1,4 @@
-package data
+package model
 
 case class InclusiveLink(init : MapNode, dest : MapNode){
 
@@ -10,7 +10,7 @@ case class InclusiveLink(init : MapNode, dest : MapNode){
   }
 
   override def toString: String = {
-    s"${init.getText()} -> ${dest.getText()}"
+    s"${init.getText()} -> ${dest.docNum}"
   }
 
 }

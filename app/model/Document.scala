@@ -1,8 +1,8 @@
-package data
+package model
 
 import scala.collection.mutable
 
-case class Document (fragList : mutable.MutableList[Fragment], docNum : Int) extends MapNode {
+case class Document (fragList : mutable.MutableList[Fragment],var docNum : Int) extends MapNode {
   val initHub : Double = 1
   val initAuth : Double = 1
   var preHub : Double = initHub
@@ -11,6 +11,13 @@ case class Document (fragList : mutable.MutableList[Fragment], docNum : Int) ext
   var currentAuth : Double = initAuth
   var linkedFrag : Int = 0
   var totalFrag : Int = 0
+
+  def setDocNumToFrag(): Unit ={
+    fragList.foreach{
+      frag=>
+        frag.docNum = docNum
+    }
+  }
 
   override def getText(): String ={
     var ret :String = ""

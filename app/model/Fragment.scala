@@ -1,9 +1,11 @@
-package data
+package model
 
 import scala.collection.immutable.List
 import scala.collection.mutable
 
 case class Fragment (morphList: List[Morpheme]) extends MapNode {
+
+  var docNum : Int = 65535
 
   override def getText(): String ={
     var ret :String = ""
@@ -30,6 +32,7 @@ case class Fragment (morphList: List[Morpheme]) extends MapNode {
   def toNode(): MapNode={
     this.asInstanceOf[MapNode]
   }
+
 
   def calcInclusive(destNode :MapNode) : Double={
     val nounNum :Int= getNounList().length
