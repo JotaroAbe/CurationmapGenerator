@@ -9,10 +9,26 @@ class HomeController  @Inject()(cc: ControllerComponents) (implicit assetsFinder
   extends AbstractController(cc) {
 
   def index = Action {
+    var ret = ""
 
-    val cMap = DataInputer(List("https://docs.oracle.com/javase/jp/7/api/java/util/HashSet.html","http://taku910.github.io/mecab/")).getDidntCalcCurationMap
+    val cMap = DataInputer(List("https://docs.oracle.com/javase/jp/7/api/java/util/HashSet.html","http://taku910.github.io/mecab/", "https://ja.wikipedia.org/wiki/HH")).getDidntCalcCurationMap
     cMap.genLink()
 
-    Ok(cMap.links.toString())
+    cMap.documents.foreach{
+      doc=>
+        doc.fragList.foreach{
+          frag=>
+            frag.links.foreach{
+              link=>
+                ret += link.toString +"\n"
+                //println(s"${link.getInitDocNum} ${link.getDestDocNum}")
+            }
+            ret += "\n"
+        }
+
+
+    }
+
+    Ok(ret)
   }
 }

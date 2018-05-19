@@ -16,6 +16,7 @@ import us.feliscat.text.StringOption
 case class DataInputer(sourceList : List[String]){
 
   val docSet = mutable.HashSet.empty[Document]
+  println("形態素解析中...")
 
 
   sourceList.foreach {
@@ -32,7 +33,7 @@ case class DataInputer(sourceList : List[String]){
             queue += m
             if (queue.last.getSubPartsOfSpeech() == "句点") {
               doc.fragList += Fragment(queue.toList)
-               //println(doc.fragList.last.getText())
+              //println(doc.fragList.last.getText())
               queue.clear()
             }
           }

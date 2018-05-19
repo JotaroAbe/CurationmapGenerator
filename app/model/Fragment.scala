@@ -6,6 +6,7 @@ import scala.collection.mutable
 case class Fragment (morphList: List[Morpheme]) extends MapNode {
 
   var docNum : Int = 65535
+  var links = mutable.MutableList.empty[InclusiveLink]
 
   override def getText(): String ={
     var ret :String = ""
@@ -45,6 +46,10 @@ case class Fragment (morphList: List[Morpheme]) extends MapNode {
         }
     }
 
-    nounNum.toDouble / inclusiveNum.toDouble
+    if(!(inclusiveNum.toDouble / nounNum.toDouble).isNaN ){
+      inclusiveNum.toDouble / nounNum.toDouble
+    }else{
+      0.0
+    }
   }
 }
