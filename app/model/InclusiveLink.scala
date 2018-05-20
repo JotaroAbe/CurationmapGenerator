@@ -21,9 +21,15 @@ case class InclusiveLink(init : MapNode, dest : MapNode){
     dest.docNum
   }
 
+  def +(rearLink : InclusiveLink) :InclusiveLink={
+    InclusiveLink(init.asInstanceOf[Fragment]+rearLink.init.asInstanceOf[Fragment], dest)
+  }
+  def isLinkNone() :Boolean={
+    false
+  }
 }
 
-class NoneLink(initDocNum : Int) extends InclusiveLink(init = NoneNode ,dest = NoneNode){
+class LinkNone(initDocNum : Int) extends InclusiveLink(init = NodeNone ,dest = NodeNone){
 
 
   override def toString: String = {
@@ -31,8 +37,14 @@ class NoneLink(initDocNum : Int) extends InclusiveLink(init = NoneNode ,dest = N
   }
 
   override def getInitDocNum: Int = initDocNum
+  override def getDestDocNum: Int = Document.docNumNone
+
+  override def isLinkNone(): Boolean = true
+
 
 }
-object NoneLink{
-  def apply(initDocNum: Int): NoneLink = new NoneLink(initDocNum)
+object LinkNone extends InclusiveLink(init = NodeNone ,dest = NodeNone){
+  def apply(initDocNum: Int): LinkNone = new LinkNone(initDocNum)
 }
+
+

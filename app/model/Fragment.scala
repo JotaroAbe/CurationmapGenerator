@@ -5,8 +5,8 @@ import scala.collection.mutable
 
 case class Fragment (morphList: List[Morpheme]) extends MapNode {
 
-  var docNum : Int = 65535
-  var links = mutable.MutableList.empty[InclusiveLink]
+  var docNum : Int = Document.docNumNone
+  //var links = mutable.MutableList.empty[InclusiveLink]
 
   override def getText(): String ={
     var ret :String = ""
@@ -34,6 +34,31 @@ case class Fragment (morphList: List[Morpheme]) extends MapNode {
     this.asInstanceOf[MapNode]
   }
 
+  def genLink(destDoc : MapNode): InclusiveLink ={
+    var link : InclusiveLink = LinkNone.apply(Document.docNumNone)
+    if (docNum != destDoc.docNum) {
+      val inclusiveScore: Double = calcInclusive(destDoc)
+      //println(s"$inclusiveScore")
+      if (inclusiveScore > CurationMap.ALPHA) {
+        //println(s"${frag.docNum} ${destDoc.docNum}")
+        link = InclusiveLink(this, destDoc)
+      } else {
+        //frag.links += NoneLink(doc.docNum)
+      }
+    }else{
+      //frag.links += NoneLink(doc.docNum)
+    }
+    link
+  }
+
+
+  def +(rearFrag : Fragment) :Fragment ={
+    val mergedFrag = Fragment(List.concat(morphList, rearFrag.morphList))
+
+    mergedFrag.docNum = docNum
+
+    mergedFrag
+  }
 
   def calcInclusive(destNode :MapNode) : Double={
     val nounNum :Int= getNounList().length
@@ -52,4 +77,9 @@ case class Fragment (morphList: List[Morpheme]) extends MapNode {
       0.0
     }
   }
+
+
+}
+object FragNone extends Fragment(Nil) {
+
 }

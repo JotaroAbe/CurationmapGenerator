@@ -8,12 +8,15 @@ trait MapNode {
 
   def getText(): String
   def getNounList(): List[String]
+
 }
 
-object NoneNode extends MapNode{
-  override var docNum: Int = 65535
+object NodeNone extends MapNode{
+  override var docNum: Int = Document.docNumNone
 
   override def getText(): String = ""
 
   override def getNounList(): List[String] = Nil
+
+
 }

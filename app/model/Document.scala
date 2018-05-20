@@ -1,5 +1,7 @@
 package model
 
+import util.LinkMerger
+
 import scala.collection.mutable
 
 case class Document (fragList : mutable.MutableList[Fragment],var docNum : Int) extends MapNode {
@@ -11,6 +13,8 @@ case class Document (fragList : mutable.MutableList[Fragment],var docNum : Int) 
   var currentAuth : Double = initAuth
   var linkedFrag : Int = 0
   var totalFrag : Int = 0
+
+
 
   def setDocNumToFrag(): Unit ={
     fragList.foreach{
@@ -40,4 +44,9 @@ case class Document (fragList : mutable.MutableList[Fragment],var docNum : Int) 
     }
     nounList
   }
+
+
+}
+object Document{
+  final val docNumNone : Int= -1
 }

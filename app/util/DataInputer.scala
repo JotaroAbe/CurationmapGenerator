@@ -1,7 +1,5 @@
 package util
 
-
-
 import model.{CurationMap, Document, Fragment, Morpheme}
 
 import scala.collection.mutable
