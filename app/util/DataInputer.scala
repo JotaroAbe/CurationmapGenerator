@@ -19,7 +19,8 @@ case class DataInputer(sourceList : List[String]){
 
   sourceList.foreach {
     source =>
-      val doc: Document = Document(mutable.MutableList.empty[Fragment], sourceList.indexOf(source))
+
+      val fragList = mutable.MutableList.empty[Fragment]
       val str: String = GetterFromWeb(source).getInput
       val queue: mutable.MutableList[Morpheme] = mutable.MutableList.empty[Morpheme]
 
@@ -30,12 +31,13 @@ case class DataInputer(sourceList : List[String]){
           if (m.morph != "EOS") {
             queue += m
             if (queue.last.getSubPartsOfSpeech() == "句点") {
-              doc.fragList += Fragment(queue.toList)
+              fragList += Fragment(queue.toVector)
               //println(doc.fragList.last.getText())
               queue.clear()
             }
           }
       }
+      val doc: Document = Document(fragList.toVector, sourceList.indexOf(source))
       doc.setDocNumToFrag()
 
       docSet += doc

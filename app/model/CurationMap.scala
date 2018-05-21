@@ -9,10 +9,12 @@ object CurationMap{
 }
 
 case class CurationMap(documents : Set[Document]) {
-  val links: mutable.MutableList[InclusiveLink] = mutable.MutableList.empty[InclusiveLink]
+
+  var links : Vector[InclusiveLink] = Vector.empty[InclusiveLink]
 
 
   def genLink(): Unit ={
+    val links: mutable.MutableList[InclusiveLink] = mutable.MutableList.empty[InclusiveLink]
     var i : Int = 0
     println("リンク生成中...")
     documents.foreach {
@@ -31,6 +33,7 @@ case class CurationMap(documents : Set[Document]) {
             }
         }
     }
+    this.links = links.toVector
   }
 
   def mergeLink(): Unit ={
@@ -80,8 +83,8 @@ case class CurationMap(documents : Set[Document]) {
     ret.toSet
   }
 
-  def getFragList(fragment: Fragment) : mutable.MutableList[Fragment]={
-    var ret : mutable.MutableList[Fragment] =  mutable.MutableList.empty[Fragment]
+  def getFragList(fragment: Fragment) : Vector[Fragment]={
+    var ret : Vector[Fragment] =  Vector.empty[Fragment]
     documents.foreach{
       doc=>
         if(doc.docNum == fragment.docNum){
@@ -89,5 +92,13 @@ case class CurationMap(documents : Set[Document]) {
         }
     }
     ret
+  }
+  def setFragList(fragList : Vector[Fragment], docNum : Int) : Unit={
+    documents.foreach{
+      doc=>
+        if(doc.docNum == docNum){
+          doc.fragList = fragList
+        }
+    }
   }
 }

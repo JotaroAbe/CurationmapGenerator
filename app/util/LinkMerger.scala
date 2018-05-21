@@ -4,24 +4,21 @@ import model._
 
 import scala.collection.mutable
 
-case class LinkMerger(curationMap: CurationMap, frag1: Fragment, frag2: Fragment) {
+case class LinkMerger(curationMap: CurationMap, preFrag: Fragment, rearFrag: Fragment) {
   val mergedLinks : mutable.MutableList[InclusiveLink] = mutable.MutableList.empty[InclusiveLink]
   val mergePreLinks : mutable.MutableList[InclusiveLink] = mutable.MutableList.empty[InclusiveLink]
   val mergeRearLinks : mutable.MutableList[InclusiveLink] = mutable.MutableList.empty[InclusiveLink]
   var mergedFrag : Fragment = FragNone
-  val isMerge :Boolean = hasDuplicateLinks()
+  val isMerge :Boolean = hasDuplicateLinks() //条件
 
   if(isMerge){
 
-    mergeDuplicateLinkAndFrag()
+    genDuplicateLinkAndFrag()
 
-    mergedLinks.foreach{
-      link=>
-        println(link.toString)
-    }
-    println(frag1.getText())
-    println(frag2.getText())
-    println(mergedFrag.getText()+"\n")
+
+    curationMap.links = LinkListUpdater(curationMap.links, mergePreLinks.toVector, mergeRearLinks.toVector, mergedLinks.toVector).getNewList
+    val fragList = curationMap.getFragList(preFrag)
+    curationMap.setFragList(FragListUpdater(fragList, preFrag, mergedFrag).getNewList, preFrag.docNum)
     //tukareta
     // val fragList: mutable.Seq[Fragment] = curationMap.getFragList(frag1)
     //fragList.update(fragList.indexOf(frag1),mergedFrag)
@@ -31,9 +28,9 @@ case class LinkMerger(curationMap: CurationMap, frag1: Fragment, frag2: Fragment
   def hasDuplicateLinks() : Boolean={
     var isMerge : Boolean = false
 
-    curationMap.getDestLinkDocNums(frag1).foreach{
+    curationMap.getDestLinkDocNums(preFrag).foreach{
       destDocNum=>
-        if(curationMap.getDestLinkDocNums(frag2).contains(destDocNum)){//重複
+        if(curationMap.getDestLinkDocNums(rearFrag).contains(destDocNum)){//重複
 
           isMerge = true
         }
@@ -41,10 +38,10 @@ case class LinkMerger(curationMap: CurationMap, frag1: Fragment, frag2: Fragment
     isMerge
   }
 
-  private def mergeDuplicateLinkAndFrag():Unit={
-    curationMap.getLink(frag1).foreach{
+  private def genDuplicateLinkAndFrag():Unit={
+    curationMap.getLink(preFrag).foreach{
       preFragLink=>
-        curationMap.getLink(frag2).foreach{
+        curationMap.getLink(rearFrag).foreach{
           rearFragLink=>
             if(preFragLink.getDestDocNum == rearFragLink.getDestDocNum ){
 

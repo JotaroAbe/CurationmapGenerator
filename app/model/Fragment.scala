@@ -3,7 +3,7 @@ package model
 import scala.collection.immutable.List
 import scala.collection.mutable
 
-case class Fragment (morphList: List[Morpheme]) extends MapNode {
+case class Fragment (morphList: Vector[Morpheme]) extends MapNode {
 
   var docNum : Int = Document.docNumNone
   //var links = mutable.MutableList.empty[InclusiveLink]
@@ -53,7 +53,7 @@ case class Fragment (morphList: List[Morpheme]) extends MapNode {
 
 
   def +(rearFrag : Fragment) :Fragment ={
-    val mergedFrag = Fragment(List.concat(morphList, rearFrag.morphList))
+    val mergedFrag = Fragment(Vector.concat(morphList, rearFrag.morphList))
 
     mergedFrag.docNum = docNum
 
@@ -80,6 +80,6 @@ case class Fragment (morphList: List[Morpheme]) extends MapNode {
 
 
 }
-object FragNone extends Fragment(Nil) {
+object FragNone extends Fragment(Vector.empty) {
 
 }
