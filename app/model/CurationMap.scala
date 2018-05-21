@@ -37,15 +37,30 @@ case class CurationMap(documents : Set[Document]) {
   }
 
   def mergeLink(): Unit ={
-    documents.foreach{
-      doc=>
-        var preFrag :Fragment = FragNone
-        doc.fragList.foreach{
-          frag=>
-            LinkMerger(this,preFrag,frag)
-            preFrag = frag
-        }
-    }
+    println("リンク併合中...")
+    var loop : Boolean = false
+
+    do{
+      loop = false
+      var currentLinkList: Vector[InclusiveLink] = links
+      documents.foreach {
+        doc =>
+          var preFrag: Fragment = FragNone
+          var currentFragList = doc.fragList
+          doc.fragList.foreach {
+            frag =>
+              val lm = LinkMerger(preFrag, frag, currentFragList, currentLinkList)
+              preFrag = frag
+              currentFragList = lm.getNewFragList()
+              currentLinkList = lm.getNewLinkList()
+              if (lm.isMerge) {
+                loop = true
+              }
+          }
+          doc.fragList = currentFragList
+      }
+      links = currentLinkList
+    }while(loop)
   }
 
   def getText() : String={
@@ -72,33 +87,6 @@ case class CurationMap(documents : Set[Document]) {
     ret.toList
   }
 
-  def getDestLinkDocNums(frag :Fragment) : Set[Int]={
-    val ret = mutable.Set.empty[Int]
-    links.foreach{
-      link=>
-        if(link.init == frag && link.getDestDocNum != Document.docNumNone){
-          ret += link.getDestDocNum
-        }
-    }
-    ret.toSet
-  }
 
-  def getFragList(fragment: Fragment) : Vector[Fragment]={
-    var ret : Vector[Fragment] =  Vector.empty[Fragment]
-    documents.foreach{
-      doc=>
-        if(doc.docNum == fragment.docNum){
-          ret = doc.fragList
-        }
-    }
-    ret
-  }
-  def setFragList(fragList : Vector[Fragment], docNum : Int) : Unit={
-    documents.foreach{
-      doc=>
-        if(doc.docNum == docNum){
-          doc.fragList = fragList
-        }
-    }
-  }
+
 }

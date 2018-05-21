@@ -10,7 +10,6 @@ import us.feliscat.text.analyzer.mor.mecab.IpadicMecab
 
 import us.feliscat.text.StringOption
 
-
 case class DataInputer(sourceList : List[String]){
 
   val docSet = mutable.HashSet.empty[Document]

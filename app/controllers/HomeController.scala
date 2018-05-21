@@ -16,13 +16,8 @@ class HomeController  @Inject()(cc: ControllerComponents) (implicit assetsFinder
     cMap.mergeLink()
 
     cMap.links.foreach{
-
               link=>
                 ret += link.toString +"\n"
-                //println(s"${link.getInitDocNum} ${link.getDestDocNum}")
-
-
-
     }
 
     Ok(ret)

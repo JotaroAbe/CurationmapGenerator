@@ -4,33 +4,30 @@ import model.{Fragment, InclusiveLink}
 
 import scala.collection.mutable
 
-case class LinkListUpdater(list : Vector[InclusiveLink], oldPreLinks : Vector[InclusiveLink],oldRearLinks : Vector[InclusiveLink], newLinks : Vector[InclusiveLink]){
-  var isChagnged = false
+case class LinkListUpdater(var list : Vector[InclusiveLink], oldPreLinks : Vector[InclusiveLink],oldRearLinks : Vector[InclusiveLink], newLinks : Vector[InclusiveLink]){
+
   private val newListbuff = mutable.MutableList.empty[InclusiveLink]
 
   var changeLinksIndex = 0
 
   oldPreLinks.foreach {
     oldPreLink =>
+      newListbuff.clear()
 
-      val index: Int = list.indexOf(oldPreLink)
+      list.foreach {
+        link =>
+          if (link.ID == oldPreLinks.apply(changeLinksIndex).ID) {
+            newListbuff += newLinks.apply(changeLinksIndex)
+          }else if(link.ID == oldRearLinks.apply(changeLinksIndex).ID){
+            //Nothing else
+          }else{
+            newListbuff += link
+          }
 
-      if(index != -1 && list.length > index + 1){
-        var i = 0
-        isChagnged = true
-        list.foreach {
-          link =>
-            if (index == i) {
-              newListbuff += newLinks.apply(changeLinksIndex)
-            }else if(link == oldRearLinks.apply(changeLinksIndex)){
-              //Nothing else
-            }else{
-              newListbuff += link
-            }
-            i += 1
-        }
       }
+
       changeLinksIndex += 1
+      list = newListbuff.toVector
   }
 
 

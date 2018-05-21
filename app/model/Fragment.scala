@@ -6,6 +6,7 @@ import scala.collection.mutable
 case class Fragment (morphList: Vector[Morpheme]) extends MapNode {
 
   var docNum : Int = Document.docNumNone
+
   //var links = mutable.MutableList.empty[InclusiveLink]
 
   override def getText(): String ={

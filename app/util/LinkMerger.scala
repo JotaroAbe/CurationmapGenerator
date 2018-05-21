@@ -4,7 +4,7 @@ import model._
 
 import scala.collection.mutable
 
-case class LinkMerger(curationMap: CurationMap, preFrag: Fragment, rearFrag: Fragment) {
+case class LinkMerger(preFrag: Fragment, rearFrag: Fragment, currentFragList : Vector[Fragment], currentLinkList : Vector[InclusiveLink]) {
   val mergedLinks : mutable.MutableList[InclusiveLink] = mutable.MutableList.empty[InclusiveLink]
   val mergePreLinks : mutable.MutableList[InclusiveLink] = mutable.MutableList.empty[InclusiveLink]
   val mergeRearLinks : mutable.MutableList[InclusiveLink] = mutable.MutableList.empty[InclusiveLink]
@@ -16,21 +16,36 @@ case class LinkMerger(curationMap: CurationMap, preFrag: Fragment, rearFrag: Fra
     genDuplicateLinkAndFrag()
 
 
-    curationMap.links = LinkListUpdater(curationMap.links, mergePreLinks.toVector, mergeRearLinks.toVector, mergedLinks.toVector).getNewList
-    val fragList = curationMap.getFragList(preFrag)
-    curationMap.setFragList(FragListUpdater(fragList, preFrag, mergedFrag).getNewList, preFrag.docNum)
     //tukareta
     // val fragList: mutable.Seq[Fragment] = curationMap.getFragList(frag1)
     //fragList.update(fragList.indexOf(frag1),mergedFrag)
     //fragList.
   }
 
+  def getNewLinkList(): Vector[InclusiveLink]={
+    if(isMerge){
+      LinkListUpdater(currentLinkList, mergePreLinks.toVector, mergeRearLinks.toVector, mergedLinks.toVector).getNewList
+    }else{
+      currentLinkList
+    }
+
+  }
+
+  def getNewFragList(): Vector[Fragment]={
+    if(isMerge){
+      FragListUpdater(currentFragList, preFrag, rearFrag , mergedFrag).getNewList
+    }else{
+      currentFragList
+    }
+
+  }
+
   def hasDuplicateLinks() : Boolean={
     var isMerge : Boolean = false
 
-    curationMap.getDestLinkDocNums(preFrag).foreach{
+    getDestLinkDocNums(preFrag).foreach{
       destDocNum=>
-        if(curationMap.getDestLinkDocNums(rearFrag).contains(destDocNum)){//重複
+        if(getDestLinkDocNums(rearFrag).contains(destDocNum)){//重複
 
           isMerge = true
         }
@@ -39,9 +54,9 @@ case class LinkMerger(curationMap: CurationMap, preFrag: Fragment, rearFrag: Fra
   }
 
   private def genDuplicateLinkAndFrag():Unit={
-    curationMap.getLink(preFrag).foreach{
+    getLink(preFrag).foreach{
       preFragLink=>
-        curationMap.getLink(rearFrag).foreach{
+        getLink(rearFrag).foreach{
           rearFragLink=>
             if(preFragLink.getDestDocNum == rearFragLink.getDestDocNum ){
 
@@ -67,4 +82,27 @@ case class LinkMerger(curationMap: CurationMap, preFrag: Fragment, rearFrag: Fra
 
     mergedFrag = mergedLinks.head.init.asInstanceOf[Fragment]
   }
+  def getDestLinkDocNums(frag :Fragment) : Set[Int]={
+    val ret = mutable.Set.empty[Int]
+    currentLinkList.foreach{
+      link=>
+        if(link.init.ID == frag.ID && link.getDestDocNum != Document.docNumNone){
+          ret += link.getDestDocNum
+        }
+    }
+    ret.toSet
+  }
+
+
+  def getLink(frag :Fragment): List[InclusiveLink] ={
+    val ret : mutable.MutableList[InclusiveLink] = mutable.MutableList.empty[InclusiveLink]
+    currentLinkList.foreach{
+      link=>
+        if(link.init == frag){
+          ret += link
+        }
+    }
+    ret.toList
+  }
+
 }

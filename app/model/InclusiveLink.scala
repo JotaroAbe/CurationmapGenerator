@@ -1,7 +1,10 @@
 package model
 
+import java.util.UUID
+
 case class InclusiveLink(init : MapNode, dest : MapNode){
 
+  val ID: UUID = UUID.randomUUID()
 
   def this(init : Fragment, dest : Fragment) ={
     this(init.toNode(), dest.toNode())

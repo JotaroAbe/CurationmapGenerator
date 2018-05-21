@@ -1,7 +1,5 @@
 package model
 
-
-
 case class Morpheme(word: String, morph : String) {
 
   private val pos =  morph.split(",").head
