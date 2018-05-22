@@ -9,11 +9,11 @@ case class Morpheme(word: String, morph : String) {
   }
 
 
-  def getPartsOfSpeech():String ={
+  def getPartsOfSpeech:String ={
     //println(s"$word +++ ${morph.split(",").head}")
     pos
   }
-  def getSubPartsOfSpeech():String ={
+  def getSubPartsOfSpeech:String ={
     //println(s"$word +++ ${morph.split(",").head}")
     spos
   }

@@ -4,7 +4,7 @@ import models._
 
 import scala.collection.mutable
 
-case class LinkMerger(preFrag: Fragment, rearFrag: Fragment, currentFragList : Vector[Fragment], currentLinkList : Vector[InclusiveLink]) {
+case class LinkMerger(preFrag: Fragment, rearFrag: Fragment, currentFragList : Vector[Fragment]) {
   val mergedLinks : mutable.MutableList[InclusiveLink] = mutable.MutableList.empty[InclusiveLink]
   val mergePreLinks : mutable.MutableList[InclusiveLink] = mutable.MutableList.empty[InclusiveLink]
   val mergeRearLinks : mutable.MutableList[InclusiveLink] = mutable.MutableList.empty[InclusiveLink]
@@ -15,21 +15,8 @@ case class LinkMerger(preFrag: Fragment, rearFrag: Fragment, currentFragList : V
 
     genDuplicateLinkAndFrag()
 
-
-    //tukareta
-    // val fragList: mutable.Seq[Fragment] = curationMap.getFragList(frag1)
-    //fragList.update(fragList.indexOf(frag1),mergedFrag)
-    //fragList.
   }
 
-  def getNewLinkList: Vector[InclusiveLink]={
-    if(isMerge){
-      LinkListUpdater(currentLinkList, mergePreLinks.toVector, mergeRearLinks.toVector, mergedLinks.toVector).getNewList
-    }else{
-      currentLinkList
-    }
-
-  }
 
   def getNewFragList: Vector[Fragment]={
     if(isMerge){
@@ -54,9 +41,9 @@ case class LinkMerger(preFrag: Fragment, rearFrag: Fragment, currentFragList : V
   }
 
   private def genDuplicateLinkAndFrag():Unit={
-    getLink(preFrag).foreach{
+    preFrag.links.foreach{
       preFragLink=>
-        getLink(rearFrag).foreach{
+        rearFrag.links.foreach{
           rearFragLink=>
             if(preFragLink.getDestDocNum == rearFragLink.getDestDocNum ){
 
@@ -80,13 +67,13 @@ case class LinkMerger(preFrag: Fragment, rearFrag: Fragment, currentFragList : V
       mergedLinks += pl + rl
     }
 
-    mergedFrag = mergedLinks.head.init.asInstanceOf[Fragment]
+    mergedFrag = preFrag + rearFrag
   }
   def getDestLinkDocNums(frag :Fragment) : Set[Int]={
     val ret = mutable.Set.empty[Int]
-    currentLinkList.foreach{
+    frag.links.foreach{
       link=>
-        if(link.init.ID == frag.ID && link.getDestDocNum != Document.docNumNone){
+        if(link.getDestDocNum != Document.docNumNone){
           ret += link.getDestDocNum
         }
     }
@@ -94,15 +81,6 @@ case class LinkMerger(preFrag: Fragment, rearFrag: Fragment, currentFragList : V
   }
 
 
-  def getLink(frag :Fragment): List[InclusiveLink] ={
-    val ret : mutable.MutableList[InclusiveLink] = mutable.MutableList.empty[InclusiveLink]
-    currentLinkList.foreach{
-      link=>
-        if(link.init == frag){
-          ret += link
-        }
-    }
-    ret.toList
-  }
+
 
 }

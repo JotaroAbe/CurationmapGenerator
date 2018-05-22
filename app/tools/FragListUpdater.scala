@@ -14,8 +14,7 @@ case class FragListUpdater(list : Vector[Fragment], oldPreFrag : Fragment, oldRe
         newListbuff += newFrag
 
       }else if(frag.ID == oldRearFrag.ID){
-        //Nothing else
-        //println(frag.ID)
+        //Do Nothing
       }else{
         newListbuff += frag
 

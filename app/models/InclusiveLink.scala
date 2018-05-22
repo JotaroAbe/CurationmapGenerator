@@ -2,51 +2,49 @@ package models
 
 import java.util.UUID
 
-case class InclusiveLink(init : MapNode, dest : MapNode){
+case class InclusiveLink(dest : MapNode){
 
-  val ID: UUID = UUID.randomUUID()
+  val ID: UUID = UUID.randomUUID
 
-  def this(init : Fragment, dest : Fragment) ={
-    this(init.toNode(), dest.toNode())
+  def this( dest : Fragment) ={
+    this( dest.toNode)
   }
-  def this(init : Fragment, dest : Document) ={
-    this(init.toNode(), dest.toNode())
+  def this( dest : Document) ={
+    this( dest.toNode)
   }
 
   override def toString: String = {
-    s"${init.getText()} -> Doc${dest.docNum}"
+    s"-> Doc${dest.docNum}"
   }
 
-  def getInitDocNum : Int ={
-    init.docNum
-  }
+
   def getDestDocNum : Int ={
     dest.docNum
   }
 
   def +(rearLink : InclusiveLink) :InclusiveLink={
-    InclusiveLink(init.asInstanceOf[Fragment]+rearLink.init.asInstanceOf[Fragment], dest)
+    InclusiveLink(dest)
   }
-  def isLinkNone() :Boolean={
+  def isLinkNone :Boolean={
     false
   }
 }
 
-class LinkNone(initDocNum : Int) extends InclusiveLink(init = NodeNone ,dest = NodeNone){
+class LinkNone(initDocNum : Int) extends InclusiveLink(dest = NodeNone){
 
 
   override def toString: String = {
     s"Doc${initDocNum}Frag None Link"
   }
 
-  override def getInitDocNum: Int = initDocNum
+
   override def getDestDocNum: Int = Document.docNumNone
 
-  override def isLinkNone(): Boolean = true
+  override def isLinkNone: Boolean = true
 
 
 }
-object LinkNone extends InclusiveLink(init = NodeNone ,dest = NodeNone){
+object LinkNone extends InclusiveLink(dest = NodeNone){
   def apply(initDocNum: Int): LinkNone = new LinkNone(initDocNum)
 }
 

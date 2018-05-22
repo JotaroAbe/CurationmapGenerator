@@ -15,11 +15,18 @@ class HomeController  @Inject()(cc: ControllerComponents) (implicit assetsFinder
     cMap.genLink()
     cMap.mergeLink()
 
-    cMap.links.foreach{
+    cMap.documents.foreach{
+      doc=>
+        doc.fragList.foreach{
+          frag=>
+            frag.links.foreach{
               link=>
-                ret += link.toString +"\n"
+                ret += frag.getText + link.toString +"\n"
+            }
+
+        }
     }
 
-    Ok(ret)
+    Ok(cMap.getText +"\n"+ ret)
   }
 }

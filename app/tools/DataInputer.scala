@@ -29,7 +29,7 @@ case class DataInputer(sourceList : List[String]){
           val m = Morpheme(mor.split("\t").head, mor.split("\t").last)
           if (m.morph != "EOS") {
             queue += m
-            if (queue.last.getSubPartsOfSpeech() == "句点") {
+            if (queue.last.getSubPartsOfSpeech == "句点") {
               fragList += Fragment(queue.toVector)
               //println(doc.fragList.last.getText())
               queue.clear()
