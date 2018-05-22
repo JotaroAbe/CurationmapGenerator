@@ -2,7 +2,7 @@ package controllers
 import javax.inject.Inject
 import play.api.mvc.{AbstractController, ControllerComponents}
 
-import util.DataInputer
+import tools.DataInputer
 
 
 class HomeController  @Inject()(cc: ControllerComponents) (implicit assetsFinder: AssetsFinder)

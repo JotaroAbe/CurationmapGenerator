@@ -1,6 +1,6 @@
-package util
+package tools
 
-import model.{Fragment, InclusiveLink}
+import models.{Fragment, InclusiveLink}
 
 import scala.collection.mutable
 

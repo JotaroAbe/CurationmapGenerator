@@ -1,6 +1,6 @@
-package util
+package tools
 
-import model.{CurationMap, Document, Fragment, Morpheme}
+import models.{CurationMap, Document, Fragment, Morpheme}
 
 import scala.collection.mutable
 

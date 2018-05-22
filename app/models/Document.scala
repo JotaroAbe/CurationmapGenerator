@@ -1,6 +1,6 @@
-package model
+package models
 
-import util.LinkMerger
+import tools.LinkMerger
 
 import scala.collection.mutable
 

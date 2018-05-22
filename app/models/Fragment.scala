@@ -1,4 +1,4 @@
-package model
+package models
 
 import scala.collection.immutable.List
 import scala.collection.mutable

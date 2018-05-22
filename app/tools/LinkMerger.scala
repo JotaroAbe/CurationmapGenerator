@@ -1,6 +1,6 @@
-package util
+package tools
 
-import model._
+import models._
 
 import scala.collection.mutable
 
@@ -9,7 +9,7 @@ case class LinkMerger(preFrag: Fragment, rearFrag: Fragment, currentFragList : V
   val mergePreLinks : mutable.MutableList[InclusiveLink] = mutable.MutableList.empty[InclusiveLink]
   val mergeRearLinks : mutable.MutableList[InclusiveLink] = mutable.MutableList.empty[InclusiveLink]
   var mergedFrag : Fragment = FragNone
-  val isMerge :Boolean = hasDuplicateLinks() //条件
+  val isMerge :Boolean = hasDuplicateLinks //条件
 
   if(isMerge){
 
@@ -22,7 +22,7 @@ case class LinkMerger(preFrag: Fragment, rearFrag: Fragment, currentFragList : V
     //fragList.
   }
 
-  def getNewLinkList(): Vector[InclusiveLink]={
+  def getNewLinkList: Vector[InclusiveLink]={
     if(isMerge){
       LinkListUpdater(currentLinkList, mergePreLinks.toVector, mergeRearLinks.toVector, mergedLinks.toVector).getNewList
     }else{
@@ -31,7 +31,7 @@ case class LinkMerger(preFrag: Fragment, rearFrag: Fragment, currentFragList : V
 
   }
 
-  def getNewFragList(): Vector[Fragment]={
+  def getNewFragList: Vector[Fragment]={
     if(isMerge){
       FragListUpdater(currentFragList, preFrag, rearFrag , mergedFrag).getNewList
     }else{
@@ -40,7 +40,7 @@ case class LinkMerger(preFrag: Fragment, rearFrag: Fragment, currentFragList : V
 
   }
 
-  def hasDuplicateLinks() : Boolean={
+  def hasDuplicateLinks : Boolean={
     var isMerge : Boolean = false
 
     getDestLinkDocNums(preFrag).foreach{

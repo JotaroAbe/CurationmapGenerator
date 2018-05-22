@@ -1,4 +1,4 @@
-package model
+package models
 
 case class Morpheme(word: String, morph : String) {
 

@@ -1,6 +1,6 @@
-package model
+package models
 
-import util.LinkMerger
+import tools.LinkMerger
 
 import scala.collection.mutable
 
@@ -51,8 +51,8 @@ case class CurationMap(documents : Set[Document]) {
             frag =>
               val lm = LinkMerger(preFrag, frag, currentFragList, currentLinkList)
               preFrag = frag
-              currentFragList = lm.getNewFragList()
-              currentLinkList = lm.getNewLinkList()
+              currentFragList = lm.getNewFragList
+              currentLinkList = lm.getNewLinkList
               if (lm.isMerge) {
                 loop = true
               }
