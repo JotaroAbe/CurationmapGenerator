@@ -90,8 +90,13 @@ case class Fragment (morphList: Vector[Morpheme]) extends MapNode {
     }
   }
 
+  def isFragNone :Boolean={
+    false
+  }
 
 }
 object FragNone extends Fragment(Vector.empty) {
-
+  override def isFragNone :Boolean={
+    true
+  }
 }

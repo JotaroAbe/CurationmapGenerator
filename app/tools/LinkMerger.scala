@@ -28,16 +28,7 @@ case class LinkMerger(preFrag: Fragment, rearFrag: Fragment, currentFragList : V
   }
 
   def hasDuplicateLinks : Boolean={
-    var isMerge : Boolean = false
-
-    getDestLinkDocNums(preFrag).foreach{
-      destDocNum=>
-        if(getDestLinkDocNums(rearFrag).contains(destDocNum)){//重複
-
-          isMerge = true
-        }
-    }
-    isMerge
+    DuplicateLinkChecker(preFrag, rearFrag).isDuplicate
   }
 
   private def genDuplicateLinkAndFrag():Unit={
@@ -69,18 +60,5 @@ case class LinkMerger(preFrag: Fragment, rearFrag: Fragment, currentFragList : V
 
     mergedFrag = preFrag + rearFrag
   }
-  def getDestLinkDocNums(frag :Fragment) : Set[Int]={
-    val ret = mutable.Set.empty[Int]
-    frag.links.foreach{
-      link=>
-        if(link.getDestDocNum != Document.docNumNone){
-          ret += link.getDestDocNum
-        }
-    }
-    ret.toSet
-  }
-
-
-
 
 }

@@ -1,8 +1,8 @@
 package controllers
 import javax.inject.Inject
+import pipeline.CMapGenerator
 import play.api.mvc.{AbstractController, ControllerComponents}
 
-import tools.DataInputer
 
 
 class HomeController  @Inject()(cc: ControllerComponents) (implicit assetsFinder: AssetsFinder)
@@ -10,10 +10,11 @@ class HomeController  @Inject()(cc: ControllerComponents) (implicit assetsFinder
 
   def index = Action {
     var ret = ""
+    val l = List("https://ja.wikipedia.org/wiki/%E8%B1%86%E8%8B%97",
+      "https://cookpad.com/search/%E8%B1%86%E8%8B%97",
+      "https://www.asahi.com/articles/ASKDC6G0YKDCUEHF01G.html")
 
-    val cMap = DataInputer(List("https://docs.oracle.com/javase/jp/7/api/java/util/HashSet.html","http://taku910.github.io/mecab/", "https://ja.wikipedia.org/wiki/HH")).getDidntCalcCurationMap
-    cMap.genLink()
-    cMap.mergeLink()
+    val cMap = CMapGenerator(l).getCMap
 
     cMap.documents.foreach{
       doc=>

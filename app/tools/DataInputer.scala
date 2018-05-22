@@ -44,7 +44,7 @@ case class DataInputer(sourceList : List[String]){
 
 
 
-  def getDidntCalcCurationMap : CurationMap={
+  def gethasntLinkCurationMap : CurationMap={
     CurationMap(docSet.toSet)
   }
 }

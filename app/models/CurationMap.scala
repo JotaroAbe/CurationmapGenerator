@@ -1,16 +1,14 @@
 package models
 
-import tools.LinkMerger
+import tools.{DuplicateLinkChecker, LinkMerger}
 
 import scala.collection.mutable
 
 object CurationMap{
-  final val ALPHA : Double = 0.4
+  final val ALPHA : Double = 0.6
 }
 
 case class CurationMap(documents : Set[Document]) {
-
-
 
   def genLink(): Unit ={
 
@@ -25,10 +23,40 @@ case class CurationMap(documents : Set[Document]) {
             documents.foreach {
               destDoc =>
                 frag.genLink(destDoc)
-
-
             }
         }
+    }
+  }
+
+  def genSplitLink(): Unit={
+
+    println("リンク補間中...")
+    documents.foreach {
+      doc =>
+        if(doc.fragList.size >= 3){
+          val newFragList = mutable.MutableList.empty[Fragment]
+          var preFrag: Fragment = FragNone
+          var centerFrag: Fragment = FragNone
+          doc.fragList.foreach {
+            rearFrag =>
+              if (!preFrag.isFragNone && !centerFrag.isFragNone) {
+                if(centerFrag.links.isEmpty) {
+                  val d = DuplicateLinkChecker(preFrag, rearFrag)
+                  d.getDupDocNumSet.foreach {
+                    docNum =>
+                      centerFrag.genLink(getDocument(docNum))
+                  }
+                }
+                newFragList += preFrag
+              }
+              preFrag = centerFrag
+              centerFrag = rearFrag
+          }
+          newFragList += preFrag
+          newFragList += centerFrag
+          doc.fragList = newFragList.toVector
+        }
+
     }
   }
 
@@ -72,5 +100,14 @@ case class CurationMap(documents : Set[Document]) {
     ret
   }
 
-
+  def getDocument(docNum :Int): Document ={
+    var ret : Document= DocumentNone
+    documents.foreach{
+      doc=>
+        if(doc.docNum == docNum){
+          ret = doc
+        }
+    }
+    ret
+  }
 }
