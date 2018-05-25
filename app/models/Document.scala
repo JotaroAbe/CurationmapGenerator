@@ -36,13 +36,13 @@ case class Document (var fragList : Vector[Fragment],var docNum : Int) extends M
   }
 
   override def getNounList: List[String] = {
-    var nounList = List.empty[String]
+    val nounList = mutable.MutableList.empty[String]
 
     fragList.foreach{
       frag=>
-        nounList =  nounList ++ frag.getNounList
+        nounList ++= frag.getNounList
     }
-    nounList
+    nounList.toList
   }
 
 

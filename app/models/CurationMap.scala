@@ -8,7 +8,7 @@ object CurationMap{
   final val ALPHA : Double = 0.6
 }
 
-case class CurationMap(documents : Set[Document]) {
+case class CurationMap(documents : Vector[Document]) {
 
   def genLink(): Unit ={
 
@@ -22,7 +22,9 @@ case class CurationMap(documents : Set[Document]) {
           frag =>
             documents.foreach {
               destDoc =>
-                frag.genLink(destDoc)
+                if(frag.docNum != destDoc.docNum) {
+                  frag.genLink(destDoc)
+                }
             }
         }
     }

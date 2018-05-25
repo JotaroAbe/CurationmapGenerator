@@ -5,16 +5,15 @@ import play.api.mvc.{AbstractController, ControllerComponents}
 
 
 
+
 class HomeController  @Inject()(cc: ControllerComponents) (implicit assetsFinder: AssetsFinder)
   extends AbstractController(cc) {
 
   def index = Action {
     var ret = ""
-    val l = List("https://ja.wikipedia.org/wiki/%E8%B1%86%E8%8B%97",
-      "https://cookpad.com/search/%E8%B1%86%E8%8B%97",
-      "https://www.asahi.com/articles/ASKDC6G0YKDCUEHF01G.html")
 
-    val cMap = CMapGenerator(l).getCMap
+
+    val cMap = CMapGenerator("尾瀬").getCMap
 
     cMap.documents.foreach{
       doc=>
@@ -29,5 +28,6 @@ class HomeController  @Inject()(cc: ControllerComponents) (implicit assetsFinder
     }
 
     Ok(cMap.getText +"\n"+ ret)
+
   }
 }

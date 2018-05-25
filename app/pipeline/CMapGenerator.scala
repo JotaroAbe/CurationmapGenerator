@@ -1,10 +1,11 @@
 package pipeline
 
 import models.CurationMap
-import tools.DataInputer
+import tools.{DataInputer, GoogleSearcher}
 
-case class CMapGenerator(list: List[String]) {
+case class CMapGenerator(query :String) {
 
+  val list: List[String] = GoogleSearcher(query).getInput
   private val cMap = DataInputer(list).gethasntLinkCurationMap
   cMap.genLink()
   cMap.genSplitLink()

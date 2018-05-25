@@ -40,8 +40,8 @@ case class Fragment (morphList: Vector[Morpheme]) extends MapNode {
     if (docNum != destDoc.docNum) {
       val inclusiveScore: Double = calcInclusive(destDoc)
       //println(s"$inclusiveScore")
-      if (inclusiveScore > CurationMap.ALPHA) {
-        //println(s"${frag.docNum} ${destDoc.docNum}")
+      if (inclusiveScore >= CurationMap.ALPHA) {
+        println(s"Generate Link Doc${this.docNum} -> Doc${destDoc.docNum}")
         link = InclusiveLink(destDoc)
       } else {
         //frag.links += NoneLink(doc.docNum)
@@ -83,11 +83,14 @@ case class Fragment (morphList: Vector[Morpheme]) extends MapNode {
         }
     }
 
-    if(!(inclusiveNum.toDouble / nounNum.toDouble).isNaN ){
-      inclusiveNum.toDouble / nounNum.toDouble
+
+    if(nounNum != 0 && inclusiveNum != 0){
+      inclusiveNum.toFloat / nounNum
     }else{
       0.0
     }
+
+
   }
 
   def isFragNone :Boolean={

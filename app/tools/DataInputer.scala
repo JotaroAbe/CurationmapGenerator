@@ -12,39 +12,45 @@ import us.feliscat.text.StringOption
 
 case class DataInputer(sourceList : List[String]){
 
-  val docSet = mutable.HashSet.empty[Document]
+  val docList = mutable.MutableList.empty[Document]
   println("形態素解析中...")
 
-
+  var i :Int = 0
   sourceList.foreach {
     source =>
+      i += 1
+      println(s"$i / ${sourceList.length}")
 
       val fragList = mutable.MutableList.empty[Fragment]
-      val str: String = GetterFromWeb(source).getInput
+      val docStr: String = GetterFromWeb(source).getInput
       val queue: mutable.MutableList[Morpheme] = mutable.MutableList.empty[Morpheme]
-
-      IpadicMecab.analyze(StringOption(str)).foreach{
-        mor =>
-          //println(mor)
-          val m = Morpheme(mor.split("\t").head, mor.split("\t").last)
-          if (m.morph != "EOS") {
-            queue += m
-            if (queue.last.getSubPartsOfSpeech == "句点") {
-              fragList += Fragment(queue.toVector)
-              //println(doc.fragList.last.getText())
-              queue.clear()
+      docStr.split("。").foreach {
+        str =>
+          if(!str.isEmpty) {
+            IpadicMecab.analyze(StringOption(str + "。")).foreach {
+              mor =>
+                //println(mor)
+                val m = Morpheme(mor.split("\t").head, mor.split("\t").last)
+                if (m.morph != "EOS") {
+                  queue += m
+                  if (queue.last.getSubPartsOfSpeech == "句点") {
+                    fragList += Fragment(queue.toVector)
+                    //println(doc.fragList.last.getText())
+                    queue.clear()
+                  }
+                }
             }
           }
       }
       val doc: Document = Document(fragList.toVector, sourceList.indexOf(source))
       doc.setDocNumToFrag()
 
-      docSet += doc
+      docList += doc
   }
 
 
 
   def gethasntLinkCurationMap : CurationMap={
-    CurationMap(docSet.toSet)
+    CurationMap(docList.toVector)
   }
 }
