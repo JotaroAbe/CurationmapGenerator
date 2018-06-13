@@ -6,6 +6,7 @@ import scala.collection.mutable
 
 object CurationMap{
   final val ALPHA : Double = 0.6
+  final val EPSILON : Double = 0.0001
 }
 
 case class CurationMap(documents : Vector[Document]) {
@@ -87,6 +88,57 @@ case class CurationMap(documents : Vector[Document]) {
       }
 
     }while(loop)
+  }
+
+  def calcHits(): Unit= {
+    println("HITS計算中...")
+    documents.foreach{
+      doc=>
+        doc.initHitsCalc()
+    }
+    do {
+      documents.foreach {
+        doc =>
+          doc.updatePreValue()
+      }
+      documents.foreach {
+        doc =>
+          doc.calcHitsOnce(documents)
+      }
+      documents.foreach {
+        doc =>
+          doc.hitsNormalize(getHubSum, getAuthSum)
+      }
+    }while(!isEndCalc)
+  }
+
+  def getHubSum : Double={
+    var ret :Double = 0.0
+    documents.foreach{
+      doc =>
+        ret += doc.currentHub
+    }
+    ret
+  }
+
+  def getAuthSum : Double={
+    var ret :Double = 0.0
+    documents.foreach{
+      doc =>
+        ret += doc.currentAuth
+    }
+    ret
+  }
+
+  def isEndCalc :Boolean={
+    var sum :Double = 0.0
+
+    documents.foreach{
+      doc =>
+        sum += Math.sqrt((doc.currentHub - doc.preHub) * (doc.currentHub - doc.preHub)
+          + (doc.currentAuth - doc.preAuth) *  (doc.currentAuth - doc.preAuth))
+    }
+    sum < CurationMap.EPSILON
   }
 
   def getText : String={

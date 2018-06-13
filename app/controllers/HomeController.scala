@@ -11,23 +11,15 @@ class HomeController  @Inject()(cc: ControllerComponents) (implicit assetsFinder
 
   def index = Action {
     var ret = ""
-
-
-    val cMap = CMapGenerator("尾瀬").getCMap
+    
+    val cMap = CMapGenerator("桜木町").getCMap
 
     cMap.documents.foreach{
       doc=>
-        doc.fragList.foreach{
-          frag=>
-            frag.links.foreach{
-              link=>
-                ret += frag.getText + link.toString +"\n"
-            }
-
-        }
+        ret += s"Doc${doc.docNum}  HUB : ${doc.currentHub} AUTH : ${doc.currentAuth}\n"
     }
 
-    Ok(cMap.getText +"\n"+ ret)
+    Ok(ret)
 
   }
 }

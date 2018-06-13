@@ -35,6 +35,17 @@ case class Fragment (morphList: Vector[Morpheme]) extends MapNode {
     this.asInstanceOf[MapNode]
   }
 
+  def hasLink(docNum : Int): Boolean ={
+    var ret : Boolean = false
+    links.foreach{
+      link =>
+        if(link.getDestDocNum == docNum){
+          ret = true
+        }
+    }
+    ret
+  }
+
   def genLink(destDoc : MapNode): Unit ={
     var link : InclusiveLink = LinkNone.apply(Document.docNumNone)
     if (docNum != destDoc.docNum) {

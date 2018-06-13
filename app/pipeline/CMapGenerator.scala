@@ -10,7 +10,7 @@ case class CMapGenerator(query :String) {
   cMap.genLink()
   cMap.genSplitLink()
   cMap.mergeLink()
-
+  cMap.calcHits()
   def getCMap: CurationMap ={
     cMap
   }

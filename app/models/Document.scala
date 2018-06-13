@@ -23,6 +23,76 @@ case class Document (var fragList : Vector[Fragment],var docNum : Int) extends M
     }
   }
 
+  def hasLink(docNum : Int): Boolean ={
+    var ret = false
+    fragList.foreach{
+      frag =>
+        if(frag.hasLink(docNum)){
+          ret = true
+        }
+    }
+    ret
+  }
+
+  def initHitsCalc():Unit={
+    preHub  = initHub
+    preAuth = initAuth
+    currentHub = initHub
+    currentAuth = initAuth
+
+    totalFrag = fragList.size
+    linkedFrag = 0
+    fragList.foreach{
+      frag =>
+        if(frag.links.nonEmpty){
+          linkedFrag += 1
+        }
+    }
+  }
+
+  def updatePreValue():Unit ={
+    preHub = currentHub
+    preAuth = currentAuth
+  }
+
+  def calcHitsOnce(documents : Vector[Document]):Unit={
+    var maxAuth : Double = 0.0
+    currentHub = 0.0
+
+    fragList.foreach{
+      frag =>
+        maxAuth = 0.0
+        frag.links.foreach{
+          link =>
+            documents.foreach{
+              doc =>
+                if(doc.docNum == link.getDestDocNum && maxAuth < doc.preAuth){
+                  maxAuth = doc.preAuth
+                }
+            }
+        }
+        currentHub += maxAuth
+    }
+    currentHub /=  1 + Math.log(totalFrag)
+
+    currentAuth = 0.0
+    documents.foreach{
+      doc =>
+        if(doc.hasLink(docNum)){
+          currentAuth += doc.preHub
+        }
+    }
+    currentAuth /= 1 + Math.log(linkedFrag)
+
+
+  }
+
+  def hitsNormalize(hubSum : Double, authSum : Double): Unit ={
+    currentHub /= hubSum
+    currentAuth /= authSum
+
+  }
+
   override def getText: String ={
     var ret :String = ""
     fragList.foreach{
