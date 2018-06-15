@@ -143,6 +143,39 @@ case class CurationMap(query : String, documents : Vector[Document]) {
     sum < CurationMap.EPSILON
   }
 
+  def changeLinkDest() : Unit={
+    println("リンク先文章選択中...")
+    documents.foreach{
+      doc =>
+        doc.fragList.foreach{
+          initfrag =>
+            initfrag.links.foreach{
+              link =>
+                documents.foreach{
+                  destDoc =>
+                    if(destDoc.docNum == link.destDocNum){
+                      var changeText : String = ""
+                      var maxInclusive : Double = 0.0
+                      destDoc.fragList.foreach{
+                        destFrag =>
+                          val thisInclusive = initfrag.calcInclusive(destFrag)
+                          if(thisInclusive > maxInclusive//&& thisInclusive > CurationMap.ALPHA テキスト断片にしなきゃ爆発するのでとりあえず
+                            && initfrag.getText.length < destFrag.getText.length){
+                            maxInclusive = thisInclusive
+                            changeText = destFrag.getText
+                          }
+                      }
+                      if(!changeText.isEmpty) {
+                        link.destText = changeText
+                      }
+                    }
+                }
+
+            }
+        }
+    }
+  }
+
   def toJson : JsValue={
     val documentJsons = mutable.MutableList.empty[DocumentJson]
     val fragmentJsons = mutable.MutableList.empty[FragmentJson]

@@ -2,7 +2,7 @@ package models
 
 import java.util.UUID
 
-case class InclusiveLink(destText : String, destDocNum : Int){
+case class InclusiveLink(var destText : String, destDocNum : Int){
 
   val ID: UUID = UUID.randomUUID
 

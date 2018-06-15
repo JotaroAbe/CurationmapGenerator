@@ -82,17 +82,35 @@ case class Fragment (morphList: Vector[Morpheme]){
     mergedFrag
   }
 
-  def calcInclusive(destNode :Document) : Double={
+  def calcInclusive(destDoc :Document) : Double={
     val nounNum :Int= getNounList.length
     var inclusiveNum : Int= 0
 
     getNounList.foreach{
       initNoun=>
-        if(destNode.getNounList.contains(initNoun)){
+        if(destDoc.getNounList.contains(initNoun)){
           inclusiveNum += 1
         }
     }
 
+    if(nounNum != 0 && inclusiveNum != 0){
+      inclusiveNum.toFloat / nounNum
+    }else{
+      0.0
+    }
+
+
+  }
+  def calcInclusive(destFrag :Fragment) : Double={
+    val nounNum :Int= getNounList.length
+    var inclusiveNum : Int= 0
+
+    getNounList.foreach{
+      initNoun=>
+        if(destFrag.getNounList.contains(initNoun)){
+          inclusiveNum += 1
+        }
+    }
 
     if(nounNum != 0 && inclusiveNum != 0){
       inclusiveNum.toFloat / nounNum

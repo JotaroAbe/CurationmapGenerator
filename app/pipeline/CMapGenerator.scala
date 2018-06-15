@@ -11,6 +11,7 @@ case class CMapGenerator(query :String) {
   cMap.genSplitLink()
   cMap.mergeLink()
   cMap.calcHits()
+  cMap.changeLinkDest()
   def getCMap: CurationMap ={
     cMap
   }
