@@ -143,7 +143,7 @@ case class CurationMap(query : String, documents : Vector[Document]) {
     sum < CurationMap.EPSILON
   }
 
-  def getJson : JsValue={
+  def toJson : JsValue={
     val documentJsons = mutable.MutableList.empty[DocumentJson]
     val fragmentJsons = mutable.MutableList.empty[FragmentJson]
     val linkJsons = mutable.MutableList.empty[LinkJson]

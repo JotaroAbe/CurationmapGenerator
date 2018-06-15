@@ -2,39 +2,32 @@ package models
 
 import java.util.UUID
 
-case class InclusiveLink(dest : MapNode){
+case class InclusiveLink(destText : String, destDocNum : Int){
 
   val ID: UUID = UUID.randomUUID
 
-  def this( dest : Fragment) ={
-    this( dest.toNode)
-  }
-  def this( dest : Document) ={
-    this( dest.toNode)
-  }
-
   override def toString: String = {
-    s"-> Doc${dest.docNum}"
+    s"-> Doc$destDocNum"
   }
 
 
   def getDestDocNum : Int ={
-    dest.docNum
+    destDocNum
   }
 
   def getDestText : String={
-    dest.getText
+    destText
   }
 
   def +(rearLink : InclusiveLink) :InclusiveLink={
-    InclusiveLink(dest)
+    InclusiveLink(destText, destDocNum)
   }
   def isLinkNone :Boolean={
     false
   }
 }
 
-class LinkNone(initDocNum : Int) extends InclusiveLink(dest = NodeNone){
+class LinkNone(initDocNum : Int) extends InclusiveLink("", Document.docNumNone){
 
 
   override def toString: String = {
@@ -48,7 +41,7 @@ class LinkNone(initDocNum : Int) extends InclusiveLink(dest = NodeNone){
 
 
 }
-object LinkNone extends InclusiveLink(dest = NodeNone){
+object LinkNone extends InclusiveLink("", Document.docNumNone){
   def apply(initDocNum: Int): LinkNone = new LinkNone(initDocNum)
 }
 

@@ -1,15 +1,17 @@
 package models
 
+import java.util.UUID
+
 import scala.collection.immutable.List
 import scala.collection.mutable
 
-case class Fragment (morphList: Vector[Morpheme]) extends MapNode {
+case class Fragment (morphList: Vector[Morpheme]){
 
   var docNum : Int = Document.docNumNone
-
+  val ID :UUID = UUID.randomUUID
   var links: mutable.MutableList[InclusiveLink] = mutable.MutableList.empty[InclusiveLink]
 
-  override def getText: String ={
+  def getText: String ={
     var ret :String = ""
     morphList.foreach{
       morph =>
@@ -18,7 +20,7 @@ case class Fragment (morphList: Vector[Morpheme]) extends MapNode {
     ret
   }
 
-  override def getNounList: List[String]={
+  def getNounList: List[String]={
     val nounList = mutable.MutableList.empty[String]
 
     morphList.foreach{
@@ -31,9 +33,6 @@ case class Fragment (morphList: Vector[Morpheme]) extends MapNode {
     nounList.toList
   }
 
-  def toNode: MapNode={
-    this.asInstanceOf[MapNode]
-  }
 
   def hasLink(docNum : Int): Boolean ={
     var ret : Boolean = false
@@ -46,14 +45,14 @@ case class Fragment (morphList: Vector[Morpheme]) extends MapNode {
     ret
   }
 
-  def genLink(destDoc : MapNode): Unit ={
+  def genLink(destDoc : Document): Unit ={
     var link : InclusiveLink = LinkNone.apply(Document.docNumNone)
     if (docNum != destDoc.docNum) {
       val inclusiveScore: Double = calcInclusive(destDoc)
       //println(s"$inclusiveScore")
       if (inclusiveScore >= CurationMap.ALPHA) {
         println(s"Generate Link Doc${this.docNum} -> Doc${destDoc.docNum}")
-        link = InclusiveLink(destDoc)
+        link = InclusiveLink(destDoc.getText, destDoc.docNum)
       } else {
         //frag.links += NoneLink(doc.docNum)
       }
@@ -75,15 +74,15 @@ case class Fragment (morphList: Vector[Morpheme]) extends MapNode {
       preLink =>
         rearFrag.links.foreach{
           rearLink=>
-          if(preLink.dest.docNum == rearLink.dest.docNum){
-            mergedFrag.links += InclusiveLink(preLink.dest)
+          if(preLink.destDocNum == rearLink.destDocNum){
+            mergedFrag.links += InclusiveLink(preLink.destText, preLink.destDocNum)
           }
         }
     }
     mergedFrag
   }
 
-  def calcInclusive(destNode :MapNode) : Double={
+  def calcInclusive(destNode :Document) : Double={
     val nounNum :Int= getNounList.length
     var inclusiveNum : Int= 0
 

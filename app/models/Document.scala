@@ -4,7 +4,7 @@ import tools.LinkMerger
 
 import scala.collection.mutable
 
-case class Document (url : String,var fragList : Vector[Fragment],var docNum : Int) extends MapNode {
+case class Document (url : String,var fragList : Vector[Fragment],var docNum : Int){
   val initHub : Double = 1
   val initAuth : Double = 1
   var preHub : Double = initHub
@@ -93,7 +93,7 @@ case class Document (url : String,var fragList : Vector[Fragment],var docNum : I
 
   }
 
-  override def getText: String ={
+  def getText: String ={
     var ret :String = ""
     fragList.foreach{
       frag =>
@@ -101,11 +101,8 @@ case class Document (url : String,var fragList : Vector[Fragment],var docNum : I
     }
     ret
   }
-  def toNode: MapNode={
-    this.asInstanceOf[MapNode]
-  }
 
-  override def getNounList: List[String] = {
+  def getNounList: List[String] = {
     val nounList = mutable.MutableList.empty[String]
 
     fragList.foreach{
