@@ -1,5 +1,7 @@
 package models
 
+import jsons.{CurationMapJson, DocumentJson, FragmentJson, LinkJson}
+import play.api.libs.json._
 import tools.{DuplicateLinkChecker, LinkMerger}
 
 import scala.collection.mutable
@@ -9,7 +11,7 @@ object CurationMap{
   final val EPSILON : Double = 0.0001
 }
 
-case class CurationMap(documents : Vector[Document]) {
+case class CurationMap(query : String, documents : Vector[Document]) {
 
   def genLink(): Unit ={
 
@@ -112,7 +114,7 @@ case class CurationMap(documents : Vector[Document]) {
     }while(!isEndCalc)
   }
 
-  def getHubSum : Double={
+  private def getHubSum : Double={
     var ret :Double = 0.0
     documents.foreach{
       doc =>
@@ -121,7 +123,7 @@ case class CurationMap(documents : Vector[Document]) {
     ret
   }
 
-  def getAuthSum : Double={
+  private def getAuthSum : Double={
     var ret :Double = 0.0
     documents.foreach{
       doc =>
@@ -130,7 +132,7 @@ case class CurationMap(documents : Vector[Document]) {
     ret
   }
 
-  def isEndCalc :Boolean={
+  private def isEndCalc :Boolean={
     var sum :Double = 0.0
 
     documents.foreach{
@@ -139,6 +141,28 @@ case class CurationMap(documents : Vector[Document]) {
           + (doc.currentAuth - doc.preAuth) *  (doc.currentAuth - doc.preAuth))
     }
     sum < CurationMap.EPSILON
+  }
+
+  def getJson : JsValue={
+    val documentJsons = mutable.MutableList.empty[DocumentJson]
+    val fragmentJsons = mutable.MutableList.empty[FragmentJson]
+    val linkJsons = mutable.MutableList.empty[LinkJson]
+
+    documents.foreach{
+      doc =>
+        fragmentJsons.clear
+        doc.fragList.foreach{
+          frag =>
+            linkJsons.clear
+            frag.links.foreach{
+              link =>
+               linkJsons += LinkJson(link.getDestText, link.getDestDocNum)
+            }
+            fragmentJsons += FragmentJson(frag.getText, linkJsons.toList)
+        }
+        documentJsons += DocumentJson(doc.url, doc.docNum, doc.currentHub, doc.currentAuth, fragmentJsons.toList)
+    }
+    Json.toJson(CurationMapJson(query, documentJsons.toList))
   }
 
   def getText : String={

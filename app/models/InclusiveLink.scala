@@ -22,6 +22,10 @@ case class InclusiveLink(dest : MapNode){
     dest.docNum
   }
 
+  def getDestText : String={
+    dest.getText
+  }
+
   def +(rearLink : InclusiveLink) :InclusiveLink={
     InclusiveLink(dest)
   }

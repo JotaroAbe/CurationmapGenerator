@@ -44,7 +44,7 @@
 |key|type|content|
 |---|---|---|
 |destText|string|リンク先の本文|
-|destID|number|リンク先のDocument Number|
+|destDocNum|number|リンク先のDocument Number|
 
 
 

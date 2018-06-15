@@ -10,7 +10,7 @@ import us.feliscat.text.analyzer.mor.mecab.IpadicMecab
 
 import us.feliscat.text.StringOption
 
-case class DataInputer(sourceList : List[String]){
+case class DataInputer(query : String, sourceList : List[String]){
 
   val docList = mutable.MutableList.empty[Document]
   println("形態素解析中...")
@@ -42,7 +42,7 @@ case class DataInputer(sourceList : List[String]){
             }
           }
       }
-      val doc: Document = Document(fragList.toVector, sourceList.indexOf(source))
+      val doc: Document = Document(source, fragList.toVector, sourceList.indexOf(source))
       doc.setDocNumToFrag()
 
       docList += doc
@@ -51,6 +51,6 @@ case class DataInputer(sourceList : List[String]){
 
 
   def gethasntLinkCurationMap : CurationMap={
-    CurationMap(docList.toVector)
+    CurationMap(query, docList.toVector)
   }
 }

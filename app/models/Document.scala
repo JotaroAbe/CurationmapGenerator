@@ -4,7 +4,7 @@ import tools.LinkMerger
 
 import scala.collection.mutable
 
-case class Document (var fragList : Vector[Fragment],var docNum : Int) extends MapNode {
+case class Document (url : String,var fragList : Vector[Fragment],var docNum : Int) extends MapNode {
   val initHub : Double = 1
   val initAuth : Double = 1
   var preHub : Double = initHub
@@ -120,6 +120,6 @@ case class Document (var fragList : Vector[Fragment],var docNum : Int) extends M
 object Document{
   final val docNumNone : Int= -1
 }
-object DocumentNone extends Document(Vector.empty,Document.docNumNone) {
+object DocumentNone extends Document("",Vector.empty,Document.docNumNone) {
 
 }

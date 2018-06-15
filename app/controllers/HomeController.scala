@@ -10,16 +10,10 @@ class HomeController  @Inject()(cc: ControllerComponents) (implicit assetsFinder
   extends AbstractController(cc) {
 
   def index = Action {
-    var ret = ""
-    
-    val cMap = CMapGenerator("桜木町").getCMap
 
-    cMap.documents.foreach{
-      doc=>
-        ret += s"Doc${doc.docNum}  HUB : ${doc.currentHub} AUTH : ${doc.currentAuth}\n"
-    }
+    val cMapJson = CMapGenerator("桜木町").getCMap.getJson
 
-    Ok(ret)
+    Ok(cMapJson.toString())
 
   }
 }
