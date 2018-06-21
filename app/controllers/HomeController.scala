@@ -11,9 +11,9 @@ class HomeController  @Inject()(cc: ControllerComponents) (implicit assetsFinder
 
   def index = Action {
 
-    val cMapJson = CMapGenerator("桜木町").getCMap.toJson
+    //val cMapJson = CMapGenerator("桜木町").getCMap.toJson
 
-    Ok(cMapJson.toString())
+    Ok(views.html.index())
 
   }
 }
