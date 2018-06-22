@@ -1,11 +1,14 @@
+@(jsontext : String)
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>HTML5サンプル</title>
-        <script src="@routes.Assets.at("javascripts/test.js")"></script>
+        <title>キュレーションマップ</title>
+        <script src="@routes.Assets.at("lib/d3js/d3.min.js")"></script>
     </head>
     <body>
-        そだね〜
+        <p hidden id = "jsontext">@jsontext</p>
+
+        <script src="@routes.Assets.at("javascripts/test.js")"></script>
     </body>
 </html>
