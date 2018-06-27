@@ -1,9 +1,13 @@
 package controllers
+import com.mongodb.{MongoClient, MongoClientOptions, MongoCredential, ServerAddress}
+import com.typesafe.config.ConfigFactory
 import javax.inject.Inject
+import morphias.CurationMapMorphia
+import org.mongodb.morphia.{Datastore, Morphia}
 import pipeline.CMapGenerator
 import play.api.mvc.{AbstractController, ControllerComponents}
 
-
+import scala.collection.JavaConverters._
 
 
 class HomeController  @Inject()(cc: ControllerComponents) (implicit assetsFinder: AssetsFinder)
@@ -11,9 +15,9 @@ class HomeController  @Inject()(cc: ControllerComponents) (implicit assetsFinder
 
   def index = Action {
 
-    val cMapJson = CMapGenerator("桜木町").getCMap.toJson
+    val cMap = CMapGenerator("桜木町")
 
-    Ok(views.html.index(cMapJson.toString))
+    Ok(views.html.index(cMap.getCMapJson))
 
   }
 }

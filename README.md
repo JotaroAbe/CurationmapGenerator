@@ -51,10 +51,10 @@
 ## 使用言語・フレームワーク・ライブラリなど
 - 処理部(Webサーバ)
     - Scala
-    - SQL
     - JSON
     - [Play Framework](https://www.playframework.com/)
-    - [H2DB](http://www.h2database.com/html/main.html)
+    - [MongoDB](https://www.mongodb.com/)
+    - [Morphia](https://mongodb.github.io/morphia/)
     - [jsoup](https://jsoup.org/)
     - [FelisCatusZero](https://github.com/ktr-skmt/FelisCatusZero-multilingual)
 - 表示部(Webブラウザ)
@@ -65,5 +65,5 @@
     - [D3.js](https://d3js.org/)
 ## めもらんだむ
 - サーバは必須機能完成。データベースとかはまだ
-- 表示部、データベースは特にもっといい方法があるかも
+- 表示部は特にもっといい方法があるかも
 - 研究中のシステムのため、具体的な処理内容を変更する可能性あり

@@ -1,10 +1,12 @@
 package models
 
 import jsons.{CurationMapJson, DocumentJson, FragmentJson, LinkJson}
+import morphias._
 import play.api.libs.json._
 import tools.{DuplicateLinkChecker, LinkMerger}
 
 import scala.collection.mutable
+import scala.collection.JavaConverters._
 
 object CurationMap{
   final val ALPHA : Double = 0.6
@@ -176,7 +178,7 @@ case class CurationMap(query : String, documents : Vector[Document]) {
     }
   }
 
-  def toJson : JsValue={
+  def toJson : CurationMapJson={
     val documentJsons = mutable.MutableList.empty[DocumentJson]
     val fragmentJsons = mutable.MutableList.empty[FragmentJson]
     val linkJsons = mutable.MutableList.empty[LinkJson]
@@ -195,7 +197,29 @@ case class CurationMap(query : String, documents : Vector[Document]) {
         }
         documentJsons += DocumentJson(doc.url, doc.docNum, doc.currentHub, doc.currentAuth, fragmentJsons.toList)
     }
-    Json.toJson(CurationMapJson(query, documentJsons.toList))
+    CurationMapJson(query, documentJsons.toList)
+  }
+
+  def getMorphia : CurationMapMorphia={
+    val documentMorphia = mutable.MutableList.empty[DocumentMorphia]
+    val fragmentMorphia = mutable.MutableList.empty[FragmentMorphia]
+    val linkMorphia = mutable.MutableList.empty[LinkMorphia]
+
+    documents.foreach{
+      doc =>
+        fragmentMorphia.clear
+        doc.fragList.foreach{
+          frag =>
+            linkMorphia.clear
+            frag.links.foreach{
+              link =>
+                linkMorphia += new LinkMorphia(link.getDestText, link.getDestDocNum)
+            }
+            fragmentMorphia += new FragmentMorphia(frag.getText, linkMorphia.toList.asJava)
+        }
+        documentMorphia += new DocumentMorphia(doc.url, doc.docNum, doc.currentHub, doc.currentAuth, fragmentMorphia.toList.asJava)
+    }
+    new CurationMapMorphia(query, documentMorphia.toList.asJava)
   }
 
   def getText : String={
