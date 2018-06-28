@@ -3,6 +3,7 @@ package pipeline
 import jsons.CurationMapJson
 import models.CurationMap
 import morphias.{CurationMapMorphia, MongoDatastoreFactory}
+import org.mongodb.morphia.Datastore
 import org.mongodb.morphia.query.Query
 import play.api.libs.json.{JsValue, Json}
 import tools.{DataInputer, GoogleSearcher}
@@ -10,9 +11,8 @@ import tools.{DataInputer, GoogleSearcher}
 import scala.collection.JavaConverters._
 import scala.collection.mutable
 
-case class CMapGenerator(query :String) {
+case class CMapGenerator(query :String, ds : Datastore) {
 
-  val ds = MongoDatastoreFactory().createDataStore
   val res: Query[CurationMapMorphia] = ds.createQuery(classOf[CurationMapMorphia]).field("query").equal(query)
 
   var cMapJsonOpt = Option.empty[CurationMapJson]
