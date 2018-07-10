@@ -1,8 +1,7 @@
-.node{
-    fill: steelblue;
-}
+
 .link {
     fill: none;
-    stroke: steelblue;
-    stroke-width: 2px;
+    stroke: #555;
+    stroke-opacity: 0.4;
+    stroke-width: 1.5px;
 }

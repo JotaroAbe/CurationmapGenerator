@@ -1,74 +1,74 @@
 
 
 var jsontxt = document.getElementById("jsontext").textContent;
-//var map = JSON.parse(jsontxt);
-// サンプルデータ
-var treeData =
-    {
-        "name": "Level 0",
-        "children": [
-            {
-                "name": "Level 1-1",
-                "children": [
-                    { "name": "Level 2-1" },
-                    { "name": "Level 2-2" }
-                ]
-            },
-            { "name": "Level 1-2" }
-        ]
-    };
+var map = JSON.parse(jsontxt);
 
-// SVGの描画領域を設定
-var margin = {top: 40, right: 90, bottom: 50, left: 90},
-    width = 600 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
 
-// Treeレイアウト
-var treemap = d3.tree()
-    .size([width, height]);
+map.documents.sort(function (a,b) {
+        return (a.hub > b.hub) ? -1 : 1;
+    }
 
-// 階層データの前処理
-var rootNode = d3.hierarchy(treeData);
+);
 
-// ノード描画用のデータ
-var nodes = treemap(rootNode);
+var topDoc = map.documents[1];
+var treeData= {
+    name:topDoc.url,
+    children:[]
 
-// ノード間を結ぶパス描画用のデータ
-var links = nodes.links();
+};
 
-// SVG描画領域を設定
-var svg = d3.select("#myGraph")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-    .attr("transform",
-        "translate(" + margin.left + "," + margin.top + ")");
+for(var frag of topDoc.fragments){
+    var links = [];
+    for(var link of frag.links){
+        links.push({"name" : link.destText});
+    }
+    treeData.children.push({
+        "name" : frag.text,
+        "children":links
+    });
+}
+console.log(map);
+console.log(treeData);
 
-// ノードを描画
-svg.selectAll("circle")
-    .data(nodes.descendants())
-    .enter()
-    .append("circle")
-    .attr("class","node")
-    .attr("cx", function(d){
-        return d.x;
-    })
-    .attr("cy", function(d){
-        return d.y;
-    })
-    .attr("r", 10);
 
-// 直線を引くための関数を定義
-var fncLine = d3.line()
-    .x(function(d) {return d.x;})
-    .y(function(d) {return d.y;});
+// 3. 描画用のデータ変換
+root = d3.hierarchy(treeData);
 
-// ノード間を結ぶパスを描画
-svg.selectAll("path")
-    .data(links)
+var tree = d3.tree()
+    .size([10000, 1080])
+
+
+
+tree(root);
+
+// 4. svg要素の配置
+g = d3.select("svg").append("g").attr("transform", "translate(80,0)");
+var link = g.selectAll(".link")
+    .data(root.descendants().slice(1))
     .enter()
     .append("path")
     .attr("class", "link")
     .attr("d", function(d) {
-        return fncLine([d.source, d.target]);
+        return "M" + d.y + "," + d.x +
+            "C" + (d.parent.y + 100) + "," + d.x +
+            " " + (d.parent.y + 100) + "," + d.parent.x +
+            " " + d.parent.y + "," + d.parent.x;
     });
+
+var node = g.selectAll(".node")
+    .data(root.descendants())
+    .enter()
+    .append("g")
+    .attr("class", "node")
+    .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; })
+
+node.append("circle")
+    .attr("r", 8)
+    .attr("fill", "#999");
+
+node.append("text")
+    .attr("dy", 3)
+    .attr("x", function(d) { return d.children ? -12 : 12; })
+    .style("text-anchor", function(d) { return d.children ? "end" : "start"; })
+    .attr("font-size", "100%")
+    .text(function(d) { return d.data.name; });
