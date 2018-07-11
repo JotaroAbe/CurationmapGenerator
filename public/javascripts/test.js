@@ -35,16 +35,15 @@ console.log(treeData);
 root = d3.hierarchy(treeData);
 
 var tree = d3.tree()
-    .size([10000, 1080])
-
+    .nodeSize([30, 500]);
 
 
 tree(root);
 
 // 4. svg要素の配置
-g = d3.select("svg").append("g").attr("transform", "translate(80,0)");
+g = d3.select("svg").append("g").attr("transform", "translate(80,3000)");
 var link = g.selectAll(".link")
-    .data(root.descendants().slice(1))
+    .data(root.descendants().slice(treeData.children.length + 1))
     .enter()
     .append("path")
     .attr("class", "link")
@@ -60,7 +59,7 @@ var node = g.selectAll(".node")
     .enter()
     .append("g")
     .attr("class", "node")
-    .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; })
+    .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; });
 
 node.append("circle")
     .attr("r", 8)
