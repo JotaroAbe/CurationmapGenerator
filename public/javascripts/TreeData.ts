@@ -1,11 +1,9 @@
 import {Fragment} from "./Fragment";
+import {SvgDrawer} from "./SvgDrawer";
 
 export class TreeData{
     url : string;
     fragments : Fragment[];
-
-    static CHAR_SIZE = 15;
-    static PADDING = 20;
 
     constructor(url :string, frags : Fragment[]){
         this.url = url;
@@ -14,46 +12,46 @@ export class TreeData{
         this.calcSvgY();
     }
 
-    setFragLine():void{
-        this.fragments.forEach(function (frag) {
+    setFragLine(): void{
+        this.fragments.forEach(frag => {
             frag.setLine()
         })
     }
 
-    getLineSum(): number{
+    getSvgHeight(): number{
         let ret = 0;
-        this.fragments.forEach(function (frag) {
-            ret += frag.lineNumber;
+        this.fragments.forEach(frag => {
+            ret += frag.lines.length + SvgDrawer.FRAG_MARGIN ;
         });
-        return ret;
+        return ret * SvgDrawer.CHAR_SIZE + SvgDrawer.PADDING * 2;
     }
 
-    calcSvgY():void{
+    calcSvgY(): void{
         let i = 0;
-        this.fragments.forEach(function (frag) {
-            frag.svgY = i * TreeData.CHAR_SIZE + TreeData.PADDING;
-            frag.lines.forEach(function (line) {
-                line.svgY = i * TreeData.CHAR_SIZE + TreeData.PADDING;
+        this.fragments.forEach(frag => {
+            frag.svgY = i * SvgDrawer.CHAR_SIZE + SvgDrawer.PADDING;
+            frag.lines.forEach(line => {
+                line.svgY = i * SvgDrawer.CHAR_SIZE + SvgDrawer.PADDING;
                 i++;
             });
+            i += SvgDrawer.FRAG_MARGIN;
         });
     }
 
-    getTextSvgData(): [string, number][] {//text,y座標の配列
+    getMatomeTextSvgData(): [string, number][] {//text,y座標の配列
         const ret: [string,number][] = [];
-        this.fragments.forEach(function (frag) {
-            frag.lines.forEach(function (line) {
-                ret.push([line.text, line.svgY]);
-
+        this.fragments.forEach(frag => {
+            frag.lines.forEach(line => {
+                    ret.push([line.text, line.svgY]);
             })
         });
         return ret;
     }
 
-    getBoxSvgData():[number, number][]{
+    getBoxSvgData(): [number, number][]{//height,yの配列
         const ret: [number,number][] = [];
-        this.fragments.forEach(function (frag) {
-            ret.push([frag.lineNumber * TreeData.CHAR_SIZE, frag.svgY - TreeData.PADDING]);
+        this.fragments.forEach(frag => {
+            ret.push([(frag.lines.length + SvgDrawer.FRAG_MARGIN - SvgDrawer.BOX_MARGIN)* SvgDrawer.CHAR_SIZE, frag.svgY - SvgDrawer.PADDING]);
         });
         return ret;
     }

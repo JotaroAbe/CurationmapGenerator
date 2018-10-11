@@ -1,29 +1,22 @@
 import {Link} from "./Link";
+import {SvgDrawer} from "./SvgDrawer";
 
 export class Fragment {
     text : string;
     links : Link[];
-    lineNumber : number = 0;
 
     svgY: number = 0;
     lines: Line[] = [];
 
-    static ONE_LINE_CHAR = 50;
-    static FRAG_MARGIN = 2;
-
     constructor(text : string, links : Link[]){
         this.text = text;
         this.links = links;
-        this.lineNumber = Math.floor( this.text.length / Fragment.ONE_LINE_CHAR ) + Fragment.FRAG_MARGIN;//切り捨て
     }
 
-    setLine():void{
+    setLine(): void{
         this.lines = [];
-        for(let i = 0 ; i * Fragment.ONE_LINE_CHAR < this.text.length ; i++){
-            this.lines.push(new Line(this.text.substr(i * Fragment.ONE_LINE_CHAR ,Fragment.ONE_LINE_CHAR)));
-        }
-        for(let i = 0 ; i < Fragment.FRAG_MARGIN ; i++){
-            this.lines.push(new Line(""));//\n
+        for(let i = 0 ; i * SvgDrawer.ONE_LINE_CHAR < this.text.length ; i++){
+            this.lines.push(new Line(this.text.substr(i * SvgDrawer.ONE_LINE_CHAR ,SvgDrawer.ONE_LINE_CHAR)));
         }
     }
 

@@ -1,3 +1,4 @@
+import { SvgDrawer } from "./SvgDrawer";
 var TreeData = /** @class */ (function () {
     function TreeData(url, frags) {
         this.url = url;
@@ -10,24 +11,25 @@ var TreeData = /** @class */ (function () {
             frag.setLine();
         });
     };
-    TreeData.prototype.getLineSum = function () {
+    TreeData.prototype.getSvgHeight = function () {
         var ret = 0;
         this.fragments.forEach(function (frag) {
-            ret += frag.lineNumber;
+            ret += frag.lines.length + SvgDrawer.FRAG_MARGIN;
         });
-        return ret;
+        return ret * SvgDrawer.CHAR_SIZE + SvgDrawer.PADDING * 2;
     };
     TreeData.prototype.calcSvgY = function () {
         var i = 0;
         this.fragments.forEach(function (frag) {
-            frag.svgY = i * TreeData.CHAR_SIZE + TreeData.PADDING;
+            frag.svgY = i * SvgDrawer.CHAR_SIZE + SvgDrawer.PADDING;
             frag.lines.forEach(function (line) {
-                line.svgY = i * TreeData.CHAR_SIZE + TreeData.PADDING;
+                line.svgY = i * SvgDrawer.CHAR_SIZE + SvgDrawer.PADDING;
                 i++;
             });
+            i += SvgDrawer.FRAG_MARGIN;
         });
     };
-    TreeData.prototype.getTextSvgData = function () {
+    TreeData.prototype.getMatomeTextSvgData = function () {
         var ret = [];
         this.fragments.forEach(function (frag) {
             frag.lines.forEach(function (line) {
@@ -39,12 +41,10 @@ var TreeData = /** @class */ (function () {
     TreeData.prototype.getBoxSvgData = function () {
         var ret = [];
         this.fragments.forEach(function (frag) {
-            ret.push([frag.lineNumber * TreeData.CHAR_SIZE, frag.svgY - TreeData.PADDING]);
+            ret.push([(frag.lines.length + SvgDrawer.FRAG_MARGIN - SvgDrawer.BOX_MARGIN) * SvgDrawer.CHAR_SIZE, frag.svgY - SvgDrawer.PADDING]);
         });
         return ret;
     };
-    TreeData.CHAR_SIZE = 15;
-    TreeData.PADDING = 20;
     return TreeData;
 }());
 export { TreeData };
