@@ -19,6 +19,5 @@ libraryDependencies ++= Seq(
   "org.mongodb" % "mongo-java-driver" % "3.7.1"
 
 )
-
 import play.sbt.routes.RoutesKeys
 RoutesKeys.routesImport := Seq.empty

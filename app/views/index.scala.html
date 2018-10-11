@@ -5,12 +5,9 @@
         <meta charset="UTF-8">
         <title>キュレーションマップ</title>
         <link rel="stylesheet" type="text/css" href= "@routes.Assets.at("stylesheets/main.css")">
-        <script src="@routes.Assets.at("lib/d3js/d3.min.js")"></script>
+        <script type="module" src="@routes.Assets.at("javascripts/dist/main.js")"></script>
     </head>
     <body>
         <p hidden id = "jsontext">@jsontext</p>
-        <svg width="1920" height="10000"></svg>
-
-        <script src="@routes.Assets.at("javascripts/test.js")"></script>
     </body>
 </html>
