@@ -1,7 +1,8 @@
 import { Link } from "./Link";
 import { Fragment } from "./Fragment";
-import { TreeData } from "./TreeData";
+import { Document } from "./Document";
 import { SvgDrawer } from "./SvgDrawer";
+import { CurationMap } from "./CurationMap";
 //JSONパース
 var jsonDoc = document.getElementById("jsontext");
 var jsonText;
@@ -17,23 +18,25 @@ map.documents.sort(function (a, b) {
     return (a.hub > b.hub) ? -1 : 1;
 });
 //まとめ文書特定
-var topDoc = map.documents[2];
-//TreeData作成
-var frags = [];
-for (var _i = 0, _a = topDoc.fragments; _i < _a.length; _i++) {
-    var frag = _a[_i];
-    var links = [];
-    for (var _b = 0, _c = frag.links; _b < _c.length; _b++) {
-        var link = _c[_b];
-        links.push(new Link(link.destText));
+//CMap作成
+var docs = [];
+for (var _i = 0, _a = map.documents; _i < _a.length; _i++) {
+    var doc = _a[_i];
+    var frags = [];
+    for (var _b = 0, _c = doc.fragments; _b < _c.length; _b++) {
+        var frag = _c[_b];
+        var links = [];
+        for (var _d = 0, _e = frag.links; _d < _e.length; _d++) {
+            var link = _e[_d];
+            links.push(new Link(link.destDocNum, link.uuid));
+        }
+        frags.push(new Fragment(frag.text, links, frag.uuid));
     }
-    frags.push(new Fragment(frag.text, links));
+    docs.push(new Document(doc.url, doc.docNum, frags));
 }
-var treeData = new TreeData(topDoc.url, frags);
+var cMap = new CurationMap(docs);
+console.log(cMap);
 //SVG描画
-var matomeTextSvgData = treeData.getMatomeTextSvgData();
-var boxSvgData = treeData.getBoxSvgData();
-var svgHeight = treeData.getSvgHeight();
 var svgWidth = window.innerWidth;
 var svgDrawer = new SvgDrawer();
-svgDrawer.drawSvg(svgWidth, svgHeight, boxSvgData, matomeTextSvgData);
+svgDrawer.drawSvg(svgWidth, cMap);

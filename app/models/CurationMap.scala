@@ -191,11 +191,11 @@ case class CurationMap(query : String, documents : Vector[Document]) {
             linkJsons.clear
             frag.links.foreach{
               link =>
-               linkJsons += LinkJson(link.getDestText, link.getDestDocNum)
+               linkJsons += LinkJson(link.getDestDocNum, link.ID.toString)
             }
-            fragmentJsons += FragmentJson(frag.getText, linkJsons.toList)
+            fragmentJsons += FragmentJson(frag.getText, linkJsons.toList, frag.ID.toString)
         }
-        documentJsons += DocumentJson(doc.url, doc.docNum, doc.currentHub, doc.currentAuth, fragmentJsons.toList)
+        documentJsons += DocumentJson(doc.url, doc.docNum, doc.currentHub, doc.currentAuth, fragmentJsons.toList, doc.ID.toString)
     }
     CurationMapJson(query, documentJsons.toList)
   }
@@ -213,11 +213,11 @@ case class CurationMap(query : String, documents : Vector[Document]) {
             linkMorphia.clear
             frag.links.foreach{
               link =>
-                linkMorphia += new LinkMorphia(link.getDestText, link.getDestDocNum)
+                linkMorphia += new LinkMorphia(link.getDestDocNum, link.ID.toString)
             }
-            fragmentMorphia += new FragmentMorphia(frag.getText, linkMorphia.toList.asJava)
+            fragmentMorphia += new FragmentMorphia(frag.getText, linkMorphia.toList.asJava, frag.ID.toString)
         }
-        documentMorphia += new DocumentMorphia(doc.url, doc.docNum, doc.currentHub, doc.currentAuth, fragmentMorphia.toList.asJava)
+        documentMorphia += new DocumentMorphia(doc.url, doc.docNum, doc.currentHub, doc.currentAuth, fragmentMorphia.toList.asJava, doc.ID.toString)
     }
     new CurationMapMorphia(query, documentMorphia.toList.asJava)
   }

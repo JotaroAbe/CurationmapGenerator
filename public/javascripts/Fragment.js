@@ -1,10 +1,11 @@
 import { SvgDrawer } from "./SvgDrawer";
 var Fragment = /** @class */ (function () {
-    function Fragment(text, links) {
+    function Fragment(text, links, uuid) {
         this.svgY = 0;
         this.lines = [];
         this.text = text;
         this.links = links;
+        this.uuid = uuid;
     }
     Fragment.prototype.setLine = function () {
         this.lines = [];

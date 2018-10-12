@@ -11,18 +11,20 @@ public class LinkMorphia {
     @SuppressWarnings("unused")
     private ObjectId _id;
 
-    public String destText;
+//    public String destText;
     public int destDocNum;
+    public String uuid;
 
     @SuppressWarnings("unused")
     private LinkMorphia() {}
 
-    public LinkMorphia(String destText, int destDocNum){
-        this.destText = destText;
+    public LinkMorphia(int destDocNum, String uuid){
+//        this.destText = destText;
         this.destDocNum = destDocNum;
+        this.uuid = uuid;
     }
 
     public LinkJson toJson(){
-        return new LinkJson(destText,destDocNum);
+        return new LinkJson(destDocNum, uuid);
     }
 }

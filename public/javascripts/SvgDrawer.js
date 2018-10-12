@@ -2,13 +2,14 @@ import * as d3 from "d3";
 var SvgDrawer = /** @class */ (function () {
     function SvgDrawer() {
     }
-    SvgDrawer.prototype.drawSvg = function (svgWidth, svgHeight, boxSvgData, matomeTextSvgData) {
+    SvgDrawer.prototype.drawSvg = function (svgWidth, cMap) {
+        var treeData = cMap.documents[0];
         var svg = d3.select("body")
             .append("svg")
             .attr("width", svgWidth)
-            .attr("height", svgHeight);
-        var boxes = svg.selectAll("rect")
-            .data(boxSvgData)
+            .attr("height", treeData.getSvgHeight());
+        var boxes = svg.selectAll("matomebox")
+            .data(treeData.getMatomeBoxSvgData())
             .enter()
             .append("rect")
             .attr("class", "boxes")
@@ -16,8 +17,8 @@ var SvgDrawer = /** @class */ (function () {
             .attr("y", function (d) { return d[1]; }) //svgY
             .attr("width", SvgDrawer.ONE_LINE_CHAR * SvgDrawer.CHAR_SIZE + SvgDrawer.PADDING / 2)
             .attr("height", function (d) { return d[0]; }); ///boxHeight
-        var texts = svg.selectAll("text")
-            .data(matomeTextSvgData)
+        var texts = svg.selectAll("matometext")
+            .data(treeData.getMatomeTextSvgData())
             .enter()
             .append("text")
             .attr("class", "texts")
@@ -25,6 +26,15 @@ var SvgDrawer = /** @class */ (function () {
             .attr("x", SvgDrawer.PADDING)
             .attr("y", function (d) { return d[1]; }) //svgY
             .attr("font-size", SvgDrawer.CHAR_SIZE + "px");
+        var detailBoxes = svg.selectAll("detailbox")
+            .data(treeData.getDetailBoxSvgData().slice(0, 50))
+            .enter()
+            .append("rect")
+            .attr("class", "boxes")
+            .attr("x", svgWidth - SvgDrawer.ONE_LINE_CHAR * SvgDrawer.CHAR_SIZE - SvgDrawer.PADDING * 2)
+            .attr("y", function (d) { return d[1]; }) //svgY
+            .attr("width", SvgDrawer.ONE_LINE_CHAR * SvgDrawer.CHAR_SIZE + SvgDrawer.PADDING / 2)
+            .attr("height", function (d) { return d[0]; }); ///boxHeight
     };
     SvgDrawer.CHAR_SIZE = 16;
     SvgDrawer.PADDING = 20;

@@ -17,13 +17,15 @@ public class FragmentMorphia {
 
     public String text;
     public List<LinkMorphia> links;
+    public String uuid;
 
     @SuppressWarnings("unused")
     private FragmentMorphia() {}
 
-    public FragmentMorphia(String text, List<LinkMorphia> links){
+    public FragmentMorphia(String text, List<LinkMorphia> links, String uuid){
         this.text = text;
         this.links = links;
+        this.uuid = uuid;
     }
     public FragmentJson toJson(){
         List<LinkJson> jList = new LinkedList<>();
@@ -34,6 +36,6 @@ public class FragmentMorphia {
             }
         }
 
-        return new FragmentJson(text,jList);
+        return new FragmentJson(text, jList, uuid);
     }
 }

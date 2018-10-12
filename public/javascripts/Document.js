@@ -1,24 +1,25 @@
 import { SvgDrawer } from "./SvgDrawer";
-var TreeData = /** @class */ (function () {
-    function TreeData(url, frags) {
+var Document = /** @class */ (function () {
+    function Document(url, docNum, frags) {
         this.url = url;
+        this.docNum = docNum;
         this.fragments = frags;
         this.setFragLine();
         this.calcSvgY();
     }
-    TreeData.prototype.setFragLine = function () {
+    Document.prototype.setFragLine = function () {
         this.fragments.forEach(function (frag) {
             frag.setLine();
         });
     };
-    TreeData.prototype.getSvgHeight = function () {
+    Document.prototype.getSvgHeight = function () {
         var ret = 0;
         this.fragments.forEach(function (frag) {
             ret += frag.lines.length + SvgDrawer.FRAG_MARGIN;
         });
         return ret * SvgDrawer.CHAR_SIZE + SvgDrawer.PADDING * 2;
     };
-    TreeData.prototype.calcSvgY = function () {
+    Document.prototype.calcSvgY = function () {
         var i = 0;
         this.fragments.forEach(function (frag) {
             frag.svgY = i * SvgDrawer.CHAR_SIZE + SvgDrawer.PADDING;
@@ -29,7 +30,7 @@ var TreeData = /** @class */ (function () {
             i += SvgDrawer.FRAG_MARGIN;
         });
     };
-    TreeData.prototype.getMatomeTextSvgData = function () {
+    Document.prototype.getMatomeTextSvgData = function () {
         var ret = [];
         this.fragments.forEach(function (frag) {
             frag.lines.forEach(function (line) {
@@ -38,13 +39,24 @@ var TreeData = /** @class */ (function () {
         });
         return ret;
     };
-    TreeData.prototype.getBoxSvgData = function () {
+    Document.prototype.getMatomeBoxSvgData = function () {
         var ret = [];
         this.fragments.forEach(function (frag) {
             ret.push([(frag.lines.length + SvgDrawer.FRAG_MARGIN - SvgDrawer.BOX_MARGIN) * SvgDrawer.CHAR_SIZE, frag.svgY - SvgDrawer.PADDING]);
         });
         return ret;
     };
-    return TreeData;
+    Document.prototype.getDetailBoxSvgData = function () {
+        var ret = [];
+        var i = 0;
+        this.fragments.forEach(function (frag) {
+            frag.lines.forEach(function (link) {
+                ret.push([2 * SvgDrawer.CHAR_SIZE, i * SvgDrawer.CHAR_SIZE * 3]);
+                i++;
+            });
+        });
+        return ret;
+    };
+    return Document;
 }());
-export { TreeData };
+export { Document };

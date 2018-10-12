@@ -1,4 +1,6 @@
 import * as d3 from "d3";
+import {Document} from "./Document";
+import {CurationMap} from "./CurationMap";
 
 export class SvgDrawer{
 
@@ -8,14 +10,16 @@ export class SvgDrawer{
     static BOX_MARGIN = 1;//行
     static ONE_LINE_CHAR = 40;
 
-    drawSvg(svgWidth: number, svgHeight: number, boxSvgData: [number, number][], matomeTextSvgData: [string, number][]): void{
+    drawSvg(svgWidth: number, cMap: CurationMap): void{
+
+        const treeData: Document = cMap.documents[0];
         const svg = d3.select("body")
             .append("svg")
             .attr("width", svgWidth)
-            .attr("height", svgHeight);
+            .attr("height", treeData.getSvgHeight());
 
-        const boxes =  svg.selectAll("rect")
-            .data(boxSvgData)
+        const boxes =  svg.selectAll("matomebox")
+            .data(treeData.getMatomeBoxSvgData())
             .enter()
             .append("rect")
             .attr("class", "boxes")
@@ -25,8 +29,8 @@ export class SvgDrawer{
             .attr("height", d => d[0] );///boxHeight
 
 
-        const texts = svg.selectAll("text")
-            .data(matomeTextSvgData)
+        const texts = svg.selectAll("matometext")
+            .data(treeData.getMatomeTextSvgData())
             .enter()
             .append("text")
             .attr("class", "texts")
@@ -34,5 +38,18 @@ export class SvgDrawer{
             .attr("x", SvgDrawer.PADDING)
             .attr("y", d => d[1])//svgY
             .attr("font-size", SvgDrawer.CHAR_SIZE+"px");
+
+        const detailBoxes =  svg.selectAll("detailbox")
+            .data(treeData.getDetailBoxSvgData().slice(0, 50))
+            .enter()
+            .append("rect")
+            .attr("class", "boxes")
+            .attr("x", svgWidth - SvgDrawer.ONE_LINE_CHAR * SvgDrawer.CHAR_SIZE - SvgDrawer.PADDING * 2)
+            .attr("y", d => d[1] )//svgY
+            .attr("width", SvgDrawer.ONE_LINE_CHAR * SvgDrawer.CHAR_SIZE + SvgDrawer.PADDING / 2)
+            .attr("height", d => d[0] );///boxHeight
+
+
+
     }
 }

@@ -1,12 +1,14 @@
 import {Fragment} from "./Fragment";
 import {SvgDrawer} from "./SvgDrawer";
 
-export class TreeData{
+export class Document{
     url : string;
     fragments : Fragment[];
+    docNum: number;
 
-    constructor(url :string, frags : Fragment[]){
+    constructor(url :string, docNum: number, frags : Fragment[]){
         this.url = url;
+        this.docNum = docNum;
         this.fragments = frags;
         this.setFragLine();
         this.calcSvgY();
@@ -48,10 +50,21 @@ export class TreeData{
         return ret;
     }
 
-    getBoxSvgData(): [number, number][]{//height,yの配列
+    getMatomeBoxSvgData(): [number, number][]{//height,yの配列
         const ret: [number,number][] = [];
         this.fragments.forEach(frag => {
             ret.push([(frag.lines.length + SvgDrawer.FRAG_MARGIN - SvgDrawer.BOX_MARGIN)* SvgDrawer.CHAR_SIZE, frag.svgY - SvgDrawer.PADDING]);
+        });
+        return ret;
+    }
+    getDetailBoxSvgData(): [number, number][]{
+        const ret: [number,number][] = [];
+        let i = 0;
+        this.fragments.forEach(frag => {
+            frag.lines.forEach(link =>{
+                ret.push([2 * SvgDrawer.CHAR_SIZE, i * SvgDrawer.CHAR_SIZE * 3]);
+                i++;
+            })
         });
         return ret;
     }

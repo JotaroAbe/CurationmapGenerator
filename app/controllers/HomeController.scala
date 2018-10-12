@@ -3,7 +3,7 @@ package controllers
 import javax.inject.Inject
 import morphias._
 import org.mongodb.morphia._
-import pipeline.CMapGenerator
+import pipeline.CMapFinder
 import play.api.mvc.{AbstractController, ControllerComponents}
 
 
@@ -21,7 +21,7 @@ class HomeController  @Inject()(cc: ControllerComponents) (implicit assetsFinder
         newDataStore
     }
 
-    val cMap : CMapGenerator = CMapGenerator("桜木町", ds)
+    val cMap : CMapFinder = CMapFinder("ドラゴンボール", ds)
 
     Ok(views.html.index(cMap.getCMapJson))
 

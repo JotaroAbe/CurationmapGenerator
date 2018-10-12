@@ -4,13 +4,15 @@ import {SvgDrawer} from "./SvgDrawer";
 export class Fragment {
     text : string;
     links : Link[];
+    uuid: string;
 
     svgY: number = 0;
     lines: Line[] = [];
 
-    constructor(text : string, links : Link[]){
+    constructor(text : string, links : Link[], uuid: string){
         this.text = text;
         this.links = links;
+        this.uuid = uuid;
     }
 
     setLine(): void{

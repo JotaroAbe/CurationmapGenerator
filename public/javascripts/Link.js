@@ -1,6 +1,7 @@
 var Link = /** @class */ (function () {
-    function Link(destText) {
-        this.destText = destText;
+    function Link(destDocNum, uuid) {
+        this.destDocNum = destDocNum;
+        this.uuid = uuid;
     }
     return Link;
 }());

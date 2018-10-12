@@ -14,7 +14,6 @@ import scala.collection.mutable
 case class CMapGenerator(query :String, ds : Datastore) {
 
   val res: Query[CurationMapMorphia] = ds.createQuery(classOf[CurationMapMorphia]).field("query").equal(query)
-
   var cMapJsonOpt = Option.empty[CurationMapJson]
 
   if(res.count() == 0){

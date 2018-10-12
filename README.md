@@ -35,17 +35,18 @@
 |hub|number|Hub値|
 |auth|number|Authority値|
 |fragments|array|Fragmentの配列|
+|uuid|string|UUID|
 ### Fragment
 |key|type|content|
 |---|---|---|
 |text|string|本文|
 |links|array|Linkの配列|
+|uuid|string|UUID|
 ### Link
 |key|type|content|
 |---|---|---|
-|destText|string|リンク先の本文|
 |destDocNum|number|リンク先のDocument Number|
-
+|uuid|string|リンク先のUUID|
 
 
 ## 使用言語・フレームワーク・ライブラリなど
