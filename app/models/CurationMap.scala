@@ -1,5 +1,7 @@
 package models
 
+import java.util.UUID
+
 import jsons.{CurationMapJson, DocumentJson, FragmentJson, LinkJson}
 import morphias._
 import play.api.libs.json._
@@ -157,6 +159,8 @@ case class CurationMap(query : String, documents : Vector[Document]) {
                   destDoc =>
                     if(destDoc.docNum == link.destDocNum){
                       var changeText : String = ""
+                      var changeUuid: UUID = null
+
                       var maxInclusive : Double = 0.0
                       destDoc.fragList.foreach{
                         destFrag =>
@@ -165,10 +169,12 @@ case class CurationMap(query : String, documents : Vector[Document]) {
                             && initfrag.getText.length < destFrag.getText.length){
                             maxInclusive = thisInclusive
                             changeText = destFrag.getText
+                            changeUuid = destFrag.uuid
                           }
                       }
                       if(!changeText.isEmpty) {
                         link.destText = changeText
+                        link.destUuid = changeUuid
                       }
                     }
                 }
@@ -191,11 +197,11 @@ case class CurationMap(query : String, documents : Vector[Document]) {
             linkJsons.clear
             frag.links.foreach{
               link =>
-               linkJsons += LinkJson(link.getDestDocNum, link.ID.toString)
+               linkJsons += LinkJson(link.getDestDocNum, link.destUuid.toString)
             }
-            fragmentJsons += FragmentJson(frag.getText, linkJsons.toList, frag.ID.toString)
+            fragmentJsons += FragmentJson(frag.getText, linkJsons.toList, frag.uuid.toString)
         }
-        documentJsons += DocumentJson(doc.url, doc.docNum, doc.currentHub, doc.currentAuth, fragmentJsons.toList, doc.ID.toString)
+        documentJsons += DocumentJson(doc.url, doc.docNum, doc.currentHub, doc.currentAuth, fragmentJsons.toList, doc.uuid.toString)
     }
     CurationMapJson(query, documentJsons.toList)
   }
@@ -213,11 +219,11 @@ case class CurationMap(query : String, documents : Vector[Document]) {
             linkMorphia.clear
             frag.links.foreach{
               link =>
-                linkMorphia += new LinkMorphia(link.getDestDocNum, link.ID.toString)
+                linkMorphia += new LinkMorphia(link.getDestDocNum, link.destUuid.toString)
             }
-            fragmentMorphia += new FragmentMorphia(frag.getText, linkMorphia.toList.asJava, frag.ID.toString)
+            fragmentMorphia += new FragmentMorphia(frag.getText, linkMorphia.toList.asJava, frag.uuid.toString)
         }
-        documentMorphia += new DocumentMorphia(doc.url, doc.docNum, doc.currentHub, doc.currentAuth, fragmentMorphia.toList.asJava, doc.ID.toString)
+        documentMorphia += new DocumentMorphia(doc.url, doc.docNum, doc.currentHub, doc.currentAuth, fragmentMorphia.toList.asJava, doc.uuid.toString)
     }
     new CurationMapMorphia(query, documentMorphia.toList.asJava)
   }

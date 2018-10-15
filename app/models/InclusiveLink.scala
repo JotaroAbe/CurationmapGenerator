@@ -2,9 +2,8 @@ package models
 
 import java.util.UUID
 
-case class InclusiveLink(var destText : String, destDocNum : Int){
+case class InclusiveLink(var destText : String, var destUuid: UUID, destDocNum : Int){
 
-  val ID: UUID = UUID.randomUUID
 
   override def toString: String = {
     s"-> Doc$destDocNum"
@@ -20,14 +19,14 @@ case class InclusiveLink(var destText : String, destDocNum : Int){
   }
 
   def +(rearLink : InclusiveLink) :InclusiveLink={
-    InclusiveLink(destText, destDocNum)
+    InclusiveLink(destText, destUuid ,destDocNum)
   }
   def isLinkNone :Boolean={
     false
   }
 }
 
-class LinkNone(initDocNum : Int) extends InclusiveLink("", Document.docNumNone){
+class LinkNone(initDocNum : Int) extends InclusiveLink("", null ,Document.docNumNone){
 
 
   override def toString: String = {
@@ -41,7 +40,7 @@ class LinkNone(initDocNum : Int) extends InclusiveLink("", Document.docNumNone){
 
 
 }
-object LinkNone extends InclusiveLink("", Document.docNumNone){
+object LinkNone extends InclusiveLink("", null, Document.docNumNone){
   def apply(initDocNum: Int): LinkNone = new LinkNone(initDocNum)
 }
 

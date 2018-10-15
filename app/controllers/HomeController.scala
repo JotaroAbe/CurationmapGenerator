@@ -21,7 +21,7 @@ class HomeController  @Inject()(cc: ControllerComponents) (implicit assetsFinder
         newDataStore
     }
 
-    val cMap : CMapFinder = CMapFinder("ドラゴンボール", ds)
+    val cMap : CMapFinder = CMapFinder("桜木町", ds)
 
     Ok(views.html.index(cMap.getCMapJson))
 

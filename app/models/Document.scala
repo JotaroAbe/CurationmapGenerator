@@ -15,7 +15,7 @@ case class Document (url : String,var fragList : Vector[Fragment],var docNum : I
   var currentAuth : Double = initAuth
   var linkedFrag : Int = 0
   var totalFrag : Int = 0
-  val ID :UUID = UUID.randomUUID
+  val uuid :UUID = UUID.randomUUID
 
 
   def setDocNumToFrag(): Unit ={

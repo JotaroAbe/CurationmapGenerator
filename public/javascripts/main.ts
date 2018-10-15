@@ -36,7 +36,7 @@ for(const doc of map.documents) {
         }
         frags.push(new Fragment(frag.text, links, frag.uuid));
     }
-    docs.push(new Document(doc.url, doc.docNum, frags));
+    docs.push(new Document(doc.url, doc.docNum, frags, doc.uuid));
 }
 
 const cMap: CurationMap = new CurationMap(docs);

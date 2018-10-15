@@ -3,7 +3,7 @@ var SvgDrawer = /** @class */ (function () {
     function SvgDrawer() {
     }
     SvgDrawer.prototype.drawSvg = function (svgWidth, cMap) {
-        var treeData = cMap.documents[0];
+        var treeData = cMap.documents[1];
         var svg = d3.select("body")
             .append("svg")
             .attr("width", svgWidth)
@@ -27,7 +27,7 @@ var SvgDrawer = /** @class */ (function () {
             .attr("y", function (d) { return d[1]; }) //svgY
             .attr("font-size", SvgDrawer.CHAR_SIZE + "px");
         var detailBoxes = svg.selectAll("detailbox")
-            .data(treeData.getDetailBoxSvgData().slice(0, 50))
+            .data(treeData.getDetailBoxSvgData())
             .enter()
             .append("rect")
             .attr("class", "boxes")
@@ -35,6 +35,15 @@ var SvgDrawer = /** @class */ (function () {
             .attr("y", function (d) { return d[1]; }) //svgY
             .attr("width", SvgDrawer.ONE_LINE_CHAR * SvgDrawer.CHAR_SIZE + SvgDrawer.PADDING / 2)
             .attr("height", function (d) { return d[0]; }); ///boxHeight
+        var detailTexts = svg.selectAll("detailtext")
+            .data(treeData.getDetailTextSvgData())
+            .enter()
+            .append("text")
+            .attr("class", "texts")
+            .text(function (d) { return d[0]; }) //text
+            .attr("x", svgWidth - SvgDrawer.ONE_LINE_CHAR * SvgDrawer.CHAR_SIZE - SvgDrawer.PADDING * 2)
+            .attr("y", function (d) { return d[1]; }) //svgY
+            .attr("font-size", SvgDrawer.CHAR_SIZE + "px");
     };
     SvgDrawer.CHAR_SIZE = 16;
     SvgDrawer.PADDING = 20;

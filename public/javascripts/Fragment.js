@@ -23,3 +23,4 @@ var Line = /** @class */ (function () {
     }
     return Line;
 }());
+export { Line };

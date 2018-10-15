@@ -24,7 +24,7 @@ export class Fragment {
 
 }
 
-class Line{
+export class Line{
     text: string;
     svgY: number = 0;
 

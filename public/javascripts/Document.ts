@@ -1,17 +1,22 @@
 import {Fragment} from "./Fragment";
 import {SvgDrawer} from "./SvgDrawer";
+import {UuidTextPair} from "./UuidTextPair";
 
 export class Document{
     url : string;
     fragments : Fragment[];
     docNum: number;
+    uuid: string;
 
-    constructor(url :string, docNum: number, frags : Fragment[]){
+    linkUuidTexts: UuidTextPair[] = [];
+
+    constructor(url :string, docNum: number, frags : Fragment[], uuid: string){
         this.url = url;
         this.docNum = docNum;
         this.fragments = frags;
+        this.uuid = uuid;
         this.setFragLine();
-        this.calcSvgY();
+        this.calcMatomeSvgY();
     }
 
     setFragLine(): void{
@@ -28,7 +33,7 @@ export class Document{
         return ret * SvgDrawer.CHAR_SIZE + SvgDrawer.PADDING * 2;
     }
 
-    calcSvgY(): void{
+    calcMatomeSvgY(): void{
         let i = 0;
         this.fragments.forEach(frag => {
             frag.svgY = i * SvgDrawer.CHAR_SIZE + SvgDrawer.PADDING;
@@ -40,11 +45,24 @@ export class Document{
         });
     }
 
+    calcDetailSvgY(): void{
+        let i = 0;
+        this.linkUuidTexts.forEach( uuidText =>{
+            uuidText.svgY = i * SvgDrawer.CHAR_SIZE + SvgDrawer.PADDING;
+            uuidText.lines.forEach(line => {
+                line.svgY = i * SvgDrawer.CHAR_SIZE + SvgDrawer.PADDING;
+                i++;
+            });
+            i += SvgDrawer.FRAG_MARGIN;
+
+        })
+    }
+
     getMatomeTextSvgData(): [string, number][] {//text,y座標の配列
         const ret: [string,number][] = [];
         this.fragments.forEach(frag => {
             frag.lines.forEach(line => {
-                    ret.push([line.text, line.svgY]);
+                ret.push([line.text, line.svgY]);
             })
         });
         return ret;
@@ -57,14 +75,50 @@ export class Document{
         });
         return ret;
     }
+
+    getDetailTextSvgData(): [string, number][] {//text,y座標の配列
+        const ret: [string,number][] = [];
+        this.linkUuidTexts.forEach(uuidText => {
+            uuidText.lines.forEach(line => {
+                ret.push([line.text, line.svgY]);
+            })
+        });
+        return ret;
+    }
+
     getDetailBoxSvgData(): [number, number][]{
         const ret: [number,number][] = [];
         let i = 0;
+        this.linkUuidTexts.forEach( uuidText => {
+            ret.push([(uuidText.lines.length + SvgDrawer.FRAG_MARGIN - SvgDrawer.BOX_MARGIN)* SvgDrawer.CHAR_SIZE, uuidText.svgY - SvgDrawer.PADDING]);
+        });
+
+        return ret;
+    }
+
+    /*getFragText(uuid: string): string{
         this.fragments.forEach(frag => {
-            frag.lines.forEach(link =>{
-                ret.push([2 * SvgDrawer.CHAR_SIZE, i * SvgDrawer.CHAR_SIZE * 3]);
-                i++;
-            })
+            if(frag.uuid == uuid){
+                return frag.uuid;
+            }
+        });
+        return "";
+    }*/
+
+    getDocText():string{
+        let ret = "";
+        this.fragments.forEach(frag =>{
+            ret += frag.text;
+        });
+        return ret;
+    }
+
+    hasFragTextInLinkUuidTexts(uuid: string): boolean{
+        let ret = false;
+        this.linkUuidTexts.forEach(uuidText=> {
+            if(uuidText.uuid == uuid){
+                ret = true;
+            }
         });
         return ret;
     }

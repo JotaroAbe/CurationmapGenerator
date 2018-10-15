@@ -8,7 +8,7 @@ import scala.collection.mutable
 case class Fragment (morphList: Vector[Morpheme]){
 
   var docNum : Int = Document.docNumNone
-  val ID :UUID = UUID.randomUUID
+  val uuid :UUID = UUID.randomUUID
   var links: mutable.MutableList[InclusiveLink] = mutable.MutableList.empty[InclusiveLink]
 
   def getText: String ={
@@ -52,7 +52,7 @@ case class Fragment (morphList: Vector[Morpheme]){
       //println(s"$inclusiveScore")
       if (inclusiveScore >= CurationMap.ALPHA) {
         println(s"Generate Link Doc${this.docNum} -> Doc${destDoc.docNum}")
-        link = InclusiveLink(destDoc.getText, destDoc.docNum)
+        link = InclusiveLink(destDoc.getText, destDoc.uuid ,destDoc.docNum)
       } else {
         //frag.links += NoneLink(doc.docNum)
       }
@@ -75,7 +75,7 @@ case class Fragment (morphList: Vector[Morpheme]){
         rearFrag.links.foreach{
           rearLink=>
           if(preLink.destDocNum == rearLink.destDocNum){
-            mergedFrag.links += InclusiveLink(preLink.destText, preLink.destDocNum)
+            mergedFrag.links += InclusiveLink(preLink.destText, preLink.destUuid ,preLink.destDocNum)
           }
         }
     }

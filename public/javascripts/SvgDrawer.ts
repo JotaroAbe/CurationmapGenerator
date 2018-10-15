@@ -12,7 +12,7 @@ export class SvgDrawer{
 
     drawSvg(svgWidth: number, cMap: CurationMap): void{
 
-        const treeData: Document = cMap.documents[0];
+        const treeData: Document = cMap.documents[1];
         const svg = d3.select("body")
             .append("svg")
             .attr("width", svgWidth)
@@ -40,7 +40,7 @@ export class SvgDrawer{
             .attr("font-size", SvgDrawer.CHAR_SIZE+"px");
 
         const detailBoxes =  svg.selectAll("detailbox")
-            .data(treeData.getDetailBoxSvgData().slice(0, 50))
+            .data(treeData.getDetailBoxSvgData())
             .enter()
             .append("rect")
             .attr("class", "boxes")
@@ -49,7 +49,15 @@ export class SvgDrawer{
             .attr("width", SvgDrawer.ONE_LINE_CHAR * SvgDrawer.CHAR_SIZE + SvgDrawer.PADDING / 2)
             .attr("height", d => d[0] );///boxHeight
 
-
+        const detailTexts = svg.selectAll("detailtext")
+            .data(treeData.getDetailTextSvgData())
+            .enter()
+            .append("text")
+            .attr("class", "texts")
+            .text(d => d[0])//text
+            .attr("x", svgWidth - SvgDrawer.ONE_LINE_CHAR * SvgDrawer.CHAR_SIZE - SvgDrawer.PADDING * 2)
+            .attr("y", d => d[1])//svgY
+            .attr("font-size", SvgDrawer.CHAR_SIZE+"px");
 
     }
 }

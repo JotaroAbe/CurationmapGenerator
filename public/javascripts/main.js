@@ -32,7 +32,7 @@ for (var _i = 0, _a = map.documents; _i < _a.length; _i++) {
         }
         frags.push(new Fragment(frag.text, links, frag.uuid));
     }
-    docs.push(new Document(doc.url, doc.docNum, frags));
+    docs.push(new Document(doc.url, doc.docNum, frags, doc.uuid));
 }
 var cMap = new CurationMap(docs);
 console.log(cMap);
