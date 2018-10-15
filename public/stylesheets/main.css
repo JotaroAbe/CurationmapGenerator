@@ -6,3 +6,7 @@
 .texts {
     font-family: sans-serif;
 }
+.links {
+    fill: none;
+    stroke: blue;
+}

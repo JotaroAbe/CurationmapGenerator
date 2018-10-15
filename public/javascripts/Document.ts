@@ -88,7 +88,6 @@ export class Document{
 
     getDetailBoxSvgData(): [number, number][]{
         const ret: [number,number][] = [];
-        let i = 0;
         this.linkUuidTexts.forEach( uuidText => {
             ret.push([(uuidText.lines.length + SvgDrawer.FRAG_MARGIN - SvgDrawer.BOX_MARGIN)* SvgDrawer.CHAR_SIZE, uuidText.svgY - SvgDrawer.PADDING]);
         });
@@ -96,14 +95,25 @@ export class Document{
         return ret;
     }
 
-    /*getFragText(uuid: string): string{
-        this.fragments.forEach(frag => {
-            if(frag.uuid == uuid){
-                return frag.uuid;
+    getLinkSvgData(): [number, number][]{
+        const ret: [number, number][] = [];
+        this.fragments.forEach(frag =>{
+            frag.links.forEach(link =>{
+                ret.push([frag.svgY + frag.lines.length * SvgDrawer.CHAR_SIZE / 2, this.getDestLinkBoxSvgY(link.uuid)]);
+            })
+        });
+        return ret;
+    }
+
+    getDestLinkBoxSvgY(uuid: string): number{
+        let ret: number = 0;
+        this.linkUuidTexts.forEach(uuidText =>{
+            if(uuidText.uuid == uuid){
+                ret = uuidText.svgY + uuidText.lines.length * SvgDrawer.CHAR_SIZE / 2;
             }
         });
-        return "";
-    }*/
+        return ret;
+    }
 
     getDocText():string{
         let ret = "";

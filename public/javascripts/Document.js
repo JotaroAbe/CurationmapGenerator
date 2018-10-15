@@ -70,20 +70,30 @@ var Document = /** @class */ (function () {
     };
     Document.prototype.getDetailBoxSvgData = function () {
         var ret = [];
-        var i = 0;
         this.linkUuidTexts.forEach(function (uuidText) {
             ret.push([(uuidText.lines.length + SvgDrawer.FRAG_MARGIN - SvgDrawer.BOX_MARGIN) * SvgDrawer.CHAR_SIZE, uuidText.svgY - SvgDrawer.PADDING]);
         });
         return ret;
     };
-    /*getFragText(uuid: string): string{
-        this.fragments.forEach(frag => {
-            if(frag.uuid == uuid){
-                return frag.uuid;
+    Document.prototype.getLinkSvgData = function () {
+        var _this = this;
+        var ret = [];
+        this.fragments.forEach(function (frag) {
+            frag.links.forEach(function (link) {
+                ret.push([frag.svgY + frag.lines.length * SvgDrawer.CHAR_SIZE / 2, _this.getDestLinkBoxSvgY(link.uuid)]);
+            });
+        });
+        return ret;
+    };
+    Document.prototype.getDestLinkBoxSvgY = function (uuid) {
+        var ret = 0;
+        this.linkUuidTexts.forEach(function (uuidText) {
+            if (uuidText.uuid == uuid) {
+                ret = uuidText.svgY + uuidText.lines.length * SvgDrawer.CHAR_SIZE / 2;
             }
         });
-        return "";
-    }*/
+        return ret;
+    };
     Document.prototype.getDocText = function () {
         var ret = "";
         this.fragments.forEach(function (frag) {

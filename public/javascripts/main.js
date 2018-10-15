@@ -37,6 +37,5 @@ for (var _i = 0, _a = map.documents; _i < _a.length; _i++) {
 var cMap = new CurationMap(docs);
 console.log(cMap);
 //SVG描画
-var svgWidth = window.innerWidth;
 var svgDrawer = new SvgDrawer();
-svgDrawer.drawSvg(svgWidth, cMap);
+svgDrawer.drawSvg(cMap);

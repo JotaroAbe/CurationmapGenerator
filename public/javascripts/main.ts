@@ -44,8 +44,6 @@ const cMap: CurationMap = new CurationMap(docs);
 console.log(cMap);
 //SVG描画
 
-const svgWidth = window.innerWidth;
-
 const svgDrawer = new SvgDrawer();
-svgDrawer.drawSvg(svgWidth, cMap);
+svgDrawer.drawSvg(cMap);
 

@@ -8,11 +8,13 @@ export class SvgDrawer{
     static PADDING = 20;
     static FRAG_MARGIN = 2;//行
     static BOX_MARGIN = 1;//行
-    static ONE_LINE_CHAR = 40;
+    static ONE_LINE_CHAR = Math.round((window.innerWidth - SvgDrawer.PADDING) / 2.5 / SvgDrawer.CHAR_SIZE) ;
 
-    drawSvg(svgWidth: number, cMap: CurationMap): void{
+    drawSvg(cMap: CurationMap): void{
 
-        const treeData: Document = cMap.documents[1];
+        const svgWidth = window.innerWidth;
+
+        const treeData: Document = cMap.documents[0];
         const svg = d3.select("body")
             .append("svg")
             .attr("width", svgWidth)
@@ -58,6 +60,17 @@ export class SvgDrawer{
             .attr("x", svgWidth - SvgDrawer.ONE_LINE_CHAR * SvgDrawer.CHAR_SIZE - SvgDrawer.PADDING * 2)
             .attr("y", d => d[1])//svgY
             .attr("font-size", SvgDrawer.CHAR_SIZE+"px");
+
+        const links = svg.selectAll("link")
+            .data(treeData.getLinkSvgData())
+            .enter()
+            .append("line")
+            .attr("class", "links")
+            .attr("x1", SvgDrawer.ONE_LINE_CHAR * SvgDrawer.CHAR_SIZE + SvgDrawer.PADDING )
+            .attr("y1", d => d[0])
+            .attr("x2", svgWidth - SvgDrawer.ONE_LINE_CHAR * SvgDrawer.CHAR_SIZE - SvgDrawer.PADDING * 2)
+            .attr("y2", d => d[1]);
+
 
     }
 }
