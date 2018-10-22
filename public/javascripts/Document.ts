@@ -26,10 +26,23 @@ export class Document{
     }
 
     getSvgHeight(): number{
-        let ret = 0;
+        let matomeHeight = 0;
         this.fragments.forEach(frag => {
-            ret += frag.lines.length + SvgDrawer.FRAG_MARGIN ;
+            matomeHeight += frag.lines.length + SvgDrawer.FRAG_MARGIN ;
         });
+
+        let detailHeight = 0;
+        this.linkUuidTexts.forEach(uuidText => {
+            detailHeight += uuidText.lines.length + SvgDrawer.FRAG_MARGIN ;
+        });
+
+        let ret = 0;
+        if(matomeHeight > detailHeight){
+            ret = matomeHeight;
+        }else {
+            ret = detailHeight;
+        }
+
         return ret * SvgDrawer.CHAR_SIZE + SvgDrawer.PADDING * 2;
     }
 
@@ -46,6 +59,22 @@ export class Document{
     }
 
     calcDetailSvgY(): void{
+        let matomeLineNum = 0;
+        this.fragments.forEach(frag => {
+            matomeLineNum += frag.lines.length + SvgDrawer.FRAG_MARGIN;
+        });
+        let detailLineNum = 0;
+        this.linkUuidTexts.forEach( uuidText =>{
+            detailLineNum += uuidText.lines.length;
+        });
+        let detailMargin: number;
+        if(matomeLineNum > detailLineNum){
+            detailMargin = Math.floor((matomeLineNum - detailLineNum) / this.linkUuidTexts.length)
+        }else{
+            detailMargin = SvgDrawer.FRAG_MARGIN;
+        }
+
+
         let i = 0;
         this.linkUuidTexts.forEach( uuidText =>{
             uuidText.svgY = i * SvgDrawer.CHAR_SIZE + SvgDrawer.PADDING;
@@ -53,7 +82,7 @@ export class Document{
                 line.svgY = i * SvgDrawer.CHAR_SIZE + SvgDrawer.PADDING;
                 i++;
             });
-            i += SvgDrawer.FRAG_MARGIN;
+            i += detailMargin;
 
         })
     }
@@ -95,13 +124,29 @@ export class Document{
         return ret;
     }
 
-    getLinkSvgData(): [number, number][]{
-        const ret: [number, number][] = [];
+    getLinkSvgData(): LinkSvgData[]{
+        const ret: LinkSvgData[] = [];
         this.fragments.forEach(frag =>{
             frag.links.forEach(link =>{
-                ret.push([frag.svgY + frag.lines.length * SvgDrawer.CHAR_SIZE / 2, this.getDestLinkBoxSvgY(link.uuid)]);
+                //ret.push([frag.svgY + frag.lines.length * SvgDrawer.CHAR_SIZE / 2, this.getDestLinkBoxSvgY(link.uuid)]);
+
+                const axises: Axis[] = [];
+
+                const x1 = SvgDrawer.ONE_LINE_CHAR * SvgDrawer.CHAR_SIZE + SvgDrawer.PADDING;
+                const y1 = frag.svgY + frag.lines.length * SvgDrawer.CHAR_SIZE / 2 - SvgDrawer.CHAR_SIZE / 2;
+                const x2 = window.innerWidth - SvgDrawer.ONE_LINE_CHAR * SvgDrawer.CHAR_SIZE - SvgDrawer.PADDING * 2;
+                const y2 = this.getDestLinkBoxSvgY(link.uuid);
+
+                axises.push(new Axis(x1, y1));
+                axises.push(new Axis((x1 * 1.5 + x2 * 0.5) / 2, y1));
+                axises.push(new Axis((x1 * 0.5 + x2 * 1.5) / 2, y2));
+                axises.push(new Axis(x2, y2));
+
+                ret.push(new LinkSvgData(axises));
             })
         });
+
+
         return ret;
     }
 
@@ -109,7 +154,7 @@ export class Document{
         let ret: number = 0;
         this.linkUuidTexts.forEach(uuidText =>{
             if(uuidText.uuid == uuid){
-                ret = uuidText.svgY + uuidText.lines.length * SvgDrawer.CHAR_SIZE / 2;
+                ret = uuidText.svgY + uuidText.lines.length * SvgDrawer.CHAR_SIZE / 2 - SvgDrawer.CHAR_SIZE / 2;
             }
         });
         return ret;
@@ -131,5 +176,29 @@ export class Document{
             }
         });
         return ret;
+    }
+}
+
+export class LinkSvgData{
+    linkAxises :Axis[];
+    constructor(linkAxis : Axis[]){
+        this.linkAxises = linkAxis;
+    }
+    getObject(i: number): [number, number][]{
+        const ret: [number, number][] = [];
+
+        this.linkAxises.forEach(axis => {
+           ret.push([axis.x,  axis.y]);
+        });
+
+        return ret;
+    }
+}
+export class Axis{
+    x: number;
+    y: number;
+    constructor(x: number, y:number){
+        this.x = x;
+        this.y = y;
     }
 }

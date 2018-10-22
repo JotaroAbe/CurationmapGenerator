@@ -3,6 +3,7 @@ import { Fragment } from "./Fragment";
 import { Document } from "./Document";
 import { SvgDrawer } from "./SvgDrawer";
 import { CurationMap } from "./CurationMap";
+import $ from "jquery";
 //JSONパース
 var jsonDoc = document.getElementById("jsontext");
 var jsonText;
@@ -17,7 +18,6 @@ var map = JSON.parse(jsonText);
 map.documents.sort(function (a, b) {
     return (a.hub > b.hub) ? -1 : 1;
 });
-//まとめ文書特定
 //CMap作成
 var docs = [];
 for (var _i = 0, _a = map.documents; _i < _a.length; _i++) {
@@ -35,7 +35,12 @@ for (var _i = 0, _a = map.documents; _i < _a.length; _i++) {
     docs.push(new Document(doc.url, doc.docNum, frags, doc.uuid));
 }
 var cMap = new CurationMap(docs);
-console.log(cMap);
 //SVG描画
 var svgDrawer = new SvgDrawer();
-svgDrawer.drawSvg(cMap);
+svgDrawer.drawSvg(cMap, 0);
+var i = 1;
+cMap.documents.forEach(function (doc) {
+    var op = $("select").append("<option value=" + (i - 1) + ">" + i + ":" + doc.getDocText().substr(0, 20) + "</option>").eq(i - 1);
+    op.on("change", function (e) { return svgDrawer.drawSvg(cMap, op.val()); });
+    i++;
+});

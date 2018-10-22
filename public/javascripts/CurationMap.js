@@ -12,7 +12,7 @@ var CurationMap = /** @class */ (function () {
                 doc.fragments.forEach(function (frag) {
                     frag.links.forEach(function (link) {
                         if (!doc.hasFragTextInLinkUuidTexts(link.uuid)) {
-                            doc.linkUuidTexts.push(new UuidTextPair(link.uuid, _this.getTextFromUuid(link.uuid)));
+                            doc.linkUuidTexts.push(new UuidTextPair(link.uuid, _this.getTextFromUuid(link.uuid), _this.getDocUrl(link.destDocNum)));
                         }
                     });
                 });
@@ -37,6 +37,15 @@ var CurationMap = /** @class */ (function () {
         this.documents.forEach(function (doc) {
             doc.calcDetailSvgY();
         });
+    };
+    CurationMap.prototype.getDocUrl = function (docNum) {
+        var ret = "";
+        this.documents.forEach(function (doc) {
+            if (doc.docNum == docNum) {
+                ret = doc.url;
+            }
+        });
+        return ret;
     };
     return CurationMap;
 }());

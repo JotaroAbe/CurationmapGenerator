@@ -17,7 +17,7 @@ export class CurationMap {
                 doc.fragments.forEach(frag => {
                     frag.links.forEach(link => {
                         if(!doc.hasFragTextInLinkUuidTexts(link.uuid)){
-                            doc.linkUuidTexts.push(new UuidTextPair(link.uuid, this.getTextFromUuid(link.uuid)));
+                            doc.linkUuidTexts.push(new UuidTextPair(link.uuid, this.getTextFromUuid(link.uuid), this.getDocUrl(link.destDocNum)));
                         }
                     })
                 });
@@ -25,7 +25,7 @@ export class CurationMap {
         })
     }
 
-    getTextFromUuid(uuid: string){//リンク先が文書の場合未対応
+    getTextFromUuid(uuid: string): string{
         let ret: string = "";
         this.documents.forEach(doc =>{
             if(doc.uuid == uuid){
@@ -44,5 +44,15 @@ export class CurationMap {
         this.documents.forEach(doc =>{
             doc.calcDetailSvgY();
         })
+    }
+
+    getDocUrl(docNum: number): string{
+        let ret = "";
+        this.documents.forEach(doc=>{
+            if(doc.docNum == docNum){
+                ret = doc.url;
+            }
+        });
+        return ret;
     }
 }

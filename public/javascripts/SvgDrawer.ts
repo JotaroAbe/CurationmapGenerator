@@ -10,15 +10,19 @@ export class SvgDrawer{
     static BOX_MARGIN = 1;//行
     static ONE_LINE_CHAR = Math.round((window.innerWidth - SvgDrawer.PADDING) / 2.5 / SvgDrawer.CHAR_SIZE) ;
 
-    drawSvg(cMap: CurationMap): void{
+    drawSvg(cMap: CurationMap, hubNum: number): void{
+
+        const treeData: Document = cMap.documents[hubNum];
 
         const svgWidth = window.innerWidth;
+        const svgHeight = treeData.getSvgHeight();
 
-        const treeData: Document = cMap.documents[0];
+        d3.select("svg").remove();
+
         const svg = d3.select("body")
             .append("svg")
             .attr("width", svgWidth)
-            .attr("height", treeData.getSvgHeight());
+            .attr("height", svgHeight);
 
         const boxes =  svg.selectAll("matomebox")
             .data(treeData.getMatomeBoxSvgData())
@@ -28,7 +32,9 @@ export class SvgDrawer{
             .attr("x", SvgDrawer.PADDING / 2)
             .attr("y", d => d[1] )//svgY
             .attr("width", SvgDrawer.ONE_LINE_CHAR * SvgDrawer.CHAR_SIZE + SvgDrawer.PADDING / 2)
-            .attr("height", d => d[0] );///boxHeight
+            .attr("height", d => d[0] )//boxHeight
+            .attr("stroke", "black")
+            .attr("fill", "none");
 
 
         const texts = svg.selectAll("matometext")
@@ -49,7 +55,9 @@ export class SvgDrawer{
             .attr("x", svgWidth - SvgDrawer.ONE_LINE_CHAR * SvgDrawer.CHAR_SIZE - SvgDrawer.PADDING * 2)
             .attr("y", d => d[1] )//svgY
             .attr("width", SvgDrawer.ONE_LINE_CHAR * SvgDrawer.CHAR_SIZE + SvgDrawer.PADDING / 2)
-            .attr("height", d => d[0] );///boxHeight
+            .attr("height", d => d[0] )//boxHeight
+            .attr("stroke", d => d3.interpolateRainbow(d[1] / svgHeight))
+            .attr("fill", d => d3.interpolateRainbow(d[1] / svgHeight));
 
         const detailTexts = svg.selectAll("detailtext")
             .data(treeData.getDetailTextSvgData())
@@ -61,16 +69,24 @@ export class SvgDrawer{
             .attr("y", d => d[1])//svgY
             .attr("font-size", SvgDrawer.CHAR_SIZE+"px");
 
-        const links = svg.selectAll("link")
-            .data(treeData.getLinkSvgData())
-            .enter()
-            .append("line")
-            .attr("class", "links")
-            .attr("x1", SvgDrawer.ONE_LINE_CHAR * SvgDrawer.CHAR_SIZE + SvgDrawer.PADDING )
-            .attr("y1", d => d[0])
-            .attr("x2", svgWidth - SvgDrawer.ONE_LINE_CHAR * SvgDrawer.CHAR_SIZE - SvgDrawer.PADDING * 2)
-            .attr("y2", d => d[1]);
 
+        const lineFunction = d3.line()
+            .x(d => d[0])
+            .y(d => d[1])
+            .curve(d3.curveBasis);
+
+        const linkSvgData = treeData.getLinkSvgData();
+        let i = 0;
+        linkSvgData.forEach(link =>{
+        svg.append("path")
+            .datum(link.getObject(i))
+            .attr("class", "links")
+            .attr("d", lineFunction)
+            .attr("stroke", d3.interpolateRainbow(link.linkAxises[link.linkAxises.length - 1].y / svgHeight));
+            //.attr("class", "links");
+
+            i++;
+        });
 
     }
 }

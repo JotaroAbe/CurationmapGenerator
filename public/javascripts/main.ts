@@ -3,8 +3,9 @@ import {Fragment} from "./Fragment";
 import {Document} from "./Document";
 import {SvgDrawer} from "./SvgDrawer";
 import {CurationMap} from "./CurationMap";
-
-
+import $ from "jquery";
+import {values} from "d3-collection";
+import Event = JQuery.Event;
 //JSONパース
 const jsonDoc: any = document.getElementById("jsontext");
 let jsonText :string;
@@ -23,8 +24,6 @@ map.documents.sort(function (a: any, b: any) {
 
 );
 
-//まとめ文書特定
-
 //CMap作成
 const docs: Document[] = [];
 for(const doc of map.documents) {
@@ -41,9 +40,18 @@ for(const doc of map.documents) {
 
 const cMap: CurationMap = new CurationMap(docs);
 
-console.log(cMap);
 //SVG描画
 
 const svgDrawer = new SvgDrawer();
-svgDrawer.drawSvg(cMap);
+svgDrawer.drawSvg(cMap, 0);
+
+let i: number = 1;
+cMap.documents.forEach(doc=>{
+    const op = $("select").append("<option value="+(i - 1)+">"+i+ ":" +doc.getDocText().substr(0, 20)+"</option>").eq( i - 1 );
+    op.on("change", e=>svgDrawer.drawSvg(cMap,op.val() as number));
+    i++;
+});
+
+
+
 
