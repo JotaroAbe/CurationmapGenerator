@@ -87,38 +87,38 @@ export class Document{
         })
     }
 
-    getMatomeTextSvgData(): [string, number][] {//text,y座標の配列
-        const ret: [string,number][] = [];
+    getMatomeTextSvgData(): [string, number, string][] {//text,y座標,uuidの配列
+        const ret: [string, number, string][] = [];
         this.fragments.forEach(frag => {
             frag.lines.forEach(line => {
-                ret.push([line.text, line.svgY]);
+                ret.push([line.text, line.svgY, frag.uuid]);
             })
         });
         return ret;
     }
 
-    getMatomeBoxSvgData(): [number, number][]{//height,yの配列
-        const ret: [number,number][] = [];
+    getMatomeBoxSvgData(): [number, number, string][]{//height,y,uuidの配列
+        const ret: [number,number, string][] = [];
         this.fragments.forEach(frag => {
-            ret.push([(frag.lines.length + SvgDrawer.FRAG_MARGIN - SvgDrawer.BOX_MARGIN)* SvgDrawer.CHAR_SIZE, frag.svgY - SvgDrawer.PADDING]);
+            ret.push([(frag.lines.length + SvgDrawer.FRAG_MARGIN - SvgDrawer.BOX_MARGIN)* SvgDrawer.CHAR_SIZE, frag.svgY - SvgDrawer.PADDING, frag.uuid]);
         });
         return ret;
     }
 
-    getDetailTextSvgData(): [string, number][] {//text,y座標の配列
-        const ret: [string,number][] = [];
+    getDetailTextSvgData(): [string, number, string][] {//text,y座標,uuidの配列
+        const ret: [string, number, string][] = [];
         this.linkUuidTexts.forEach(uuidText => {
             uuidText.lines.forEach(line => {
-                ret.push([line.text, line.svgY]);
+                ret.push([line.text, line.svgY, uuidText.uuid]);
             })
         });
         return ret;
     }
 
-    getDetailBoxSvgData(): [number, number][]{
-        const ret: [number,number][] = [];
+    getDetailBoxSvgData(): [number, number, string][]{
+        const ret: [number, number, string][] = [];
         this.linkUuidTexts.forEach( uuidText => {
-            ret.push([(uuidText.lines.length + SvgDrawer.FRAG_MARGIN - SvgDrawer.BOX_MARGIN)* SvgDrawer.CHAR_SIZE, uuidText.svgY - SvgDrawer.PADDING]);
+            ret.push([(uuidText.lines.length + SvgDrawer.FRAG_MARGIN - SvgDrawer.BOX_MARGIN)* SvgDrawer.CHAR_SIZE, uuidText.svgY - SvgDrawer.PADDING, uuidText.uuid]);
         });
 
         return ret;
@@ -134,7 +134,7 @@ export class Document{
 
                 const x1 = SvgDrawer.ONE_LINE_CHAR * SvgDrawer.CHAR_SIZE + SvgDrawer.PADDING;
                 const y1 = frag.svgY + frag.lines.length * SvgDrawer.CHAR_SIZE / 2 - SvgDrawer.CHAR_SIZE / 2;
-                const x2 = window.innerWidth - SvgDrawer.ONE_LINE_CHAR * SvgDrawer.CHAR_SIZE - SvgDrawer.PADDING * 2;
+                const x2 = SvgDrawer.SVG_WIDTH- SvgDrawer.ONE_LINE_CHAR * SvgDrawer.CHAR_SIZE - SvgDrawer.PADDING * 2;
                 const y2 = this.getDestLinkBoxSvgY(link.uuid);
 
                 axises.push(new Axis(x1, y1));
