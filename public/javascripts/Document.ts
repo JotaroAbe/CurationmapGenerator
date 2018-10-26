@@ -97,6 +97,19 @@ export class Document{
         return ret;
     }
 
+    getMatomeTextSvgDataFromUuid(uuid: string): [string, number][] {//text yの相対座標
+        const ret: [string, number][] = [];
+        this.fragments.forEach(frag => {
+            if(uuid == frag.uuid) {
+                let fragY: number = frag.svgY;
+                frag.lines.forEach(line => {
+                    ret.push([line.text, line.svgY - fragY]);
+                })
+            }
+        });
+        return ret;
+    }
+
     getMatomeBoxSvgData(): [number, number, string][]{//height,y,uuidの配列
         const ret: [number,number, string][] = [];
         this.fragments.forEach(frag => {
@@ -177,6 +190,8 @@ export class Document{
         });
         return ret;
     }
+
+
 }
 
 export class LinkSvgData{

@@ -3,6 +3,8 @@ import {Document} from "./Document";
 import {CurationMap} from "./CurationMap";
 import $ from "jquery";
 
+
+
 export class SvgDrawer{
 
     static CHAR_SIZE = 16;
@@ -11,6 +13,7 @@ export class SvgDrawer{
     static BOX_MARGIN = 1;//行
     static SVG_WIDTH = window.innerWidth;
     static ONE_LINE_CHAR = Math.round((SvgDrawer.SVG_WIDTH - SvgDrawer.PADDING) / 2.5 / SvgDrawer.CHAR_SIZE);
+
 
     drawMainSvg(cMap: CurationMap, hubNum: number): void{
 
@@ -67,7 +70,7 @@ export class SvgDrawer{
                 .data(fragMatomeText)
                 .enter()
                 .append("text")
-                .attr("class", d => "matomeTexts " + d[2])//uuid
+                .attr("class", d => "matomeTexts")
                 .text(d => d[0])//text
                 .attr("x", SvgDrawer.PADDING)
                 .attr("y", d => d[1])//svgY
@@ -134,7 +137,7 @@ export class SvgDrawer{
         $(".matomeFrags").children().on({
             "click" :function () {
                 const cl : string = $(this).attr("id") as string;
-                me.drawMatomeClickSvg(cl);
+                me.drawMatomeClickSvg(cl, cMap, hubNum, svg);
             },
             "mouseenter" :function () {
                 $(this).children(".matomeBoxes").css("fill", "darkgray");
@@ -144,10 +147,49 @@ export class SvgDrawer{
                 $(this).children(".matomeBoxes").css("fill", "white");
             }
         });
-
     }
 
-    drawMatomeClickSvg(uuid: string): void{
-        alert($(window).scrollTop()+" " +uuid);
+    drawMatomeClickSvg(uuid: string, cMap: CurationMap, hubNum: number, svg: any): void{
+
+        const treeData = cMap.documents[hubNum];
+
+        const svgG = svg.append('g')
+            .attr("class", "matomeClicks");
+
+
+        svgG.append("rect")
+            .attr("class", "clickBgRect")
+            .attr("x", 0)
+            .attr("y", 0)
+            .attr("width", SvgDrawer.SVG_WIDTH)
+            .attr("height", treeData.getSvgHeight())
+            .attr("fill", "rgba(0, 0, 0, 0.9)");
+
+        $(".matomeClicks").on("click",function () {
+            $(this).remove();
+        });
+
+        const matomeTextData: [string, number][] = treeData.getMatomeTextSvgDataFromUuid(uuid);
+
+        const y: number = $(window).scrollTop() as number + window.innerHeight / 2 - matomeTextData.length * SvgDrawer.CHAR_SIZE;
+        const fragG = svgG.append('g')
+            .attr("class", "matomeClickFrags");
+        fragG.append("rect")
+            .attr("class", "matomeBoxes")
+            .attr("x", SvgDrawer.PADDING / 2)
+            .attr("y", y)
+            .attr("width", SvgDrawer.ONE_LINE_CHAR * SvgDrawer.CHAR_SIZE + SvgDrawer.PADDING / 2)
+            .attr("height", (matomeTextData.length + + SvgDrawer.FRAG_MARGIN - SvgDrawer.BOX_MARGIN) * SvgDrawer.CHAR_SIZE);
+
+
+        fragG.selectAll("clickmatometext")
+            .data(matomeTextData)
+            .enter()
+            .append("text")
+            .attr("class", "matomeTexts")
+            .text((d:[string, number]) => d[0])//text
+            .attr("x", SvgDrawer.PADDING)
+            .attr("y", (d:[string, number])  => y + d[1] + SvgDrawer.CHAR_SIZE)//svgY
+            .attr("font-size", SvgDrawer.CHAR_SIZE + "px");
     }
 }

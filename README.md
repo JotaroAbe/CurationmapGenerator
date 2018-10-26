@@ -21,7 +21,7 @@
     - キュレーションマップはJSONで表記
 - データベース
     - 過去のクエリと出力の保持(API制限対策、同処理複数回実行の回避)
-## JSONデータ
+## Jsonデータ
 ### CurationMap
 |key|type|content|
 |---|---|---|
@@ -50,19 +50,20 @@
 
 
 ## 使用言語・フレームワーク・ライブラリなど
-- 処理部(Webサーバ)
+- サーバ
     - Scala
-    - JSON
+    - Json
     - [Play Framework](https://www.playframework.com/)
     - [MongoDB](https://www.mongodb.com/)
     - [Morphia](https://mongodb.github.io/morphia/)
     - [jsoup](https://jsoup.org/)
     - [FelisCatusZero](https://github.com/ktr-skmt/FelisCatusZero-multilingual)
-- 表示部(Webブラウザ)
+- クライアント
     - HTML5
-    - JavaScript
+    - TypeScript
+    - [Jquery](https://jquery.com/)
     - CSS
-    - JSON
+    - Json
     - [D3.js](https://d3js.org/)
 ## めもらんだむ
 - サーバは必須機能完成。データベースとかはまだ
