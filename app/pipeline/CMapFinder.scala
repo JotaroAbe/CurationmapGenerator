@@ -1,7 +1,7 @@
 package pipeline
 
-import jsons.CurationMapJson
-import morphias.CurationMapMorphia
+import dataStructures.jsons.CurationMapJson
+import dataStructures.morphias.CurationMapMorphia
 import org.mongodb.morphia.Datastore
 import org.mongodb.morphia.query.Query
 import play.api.libs.json.Json

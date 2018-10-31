@@ -1,7 +1,7 @@
 package controllers
 
+import dataStructures.morphias.MongoDatastoreFactory
 import javax.inject.Inject
-import morphias._
 import org.mongodb.morphia._
 import pipeline.CMapFinder
 import play.api.mvc.{AbstractController, ControllerComponents}
