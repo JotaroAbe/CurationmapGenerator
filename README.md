@@ -67,7 +67,7 @@ Webをはじめ、大量の文書集合を利用して情報を得る場面は�
 - [CurationmapDataStructure](https://github.com/JotaroAbe/CurationmapDataStructure)
   - キュレーションマップのデータ構造を定義
 
-![k](./images/k.png)
+![k](./images/k.PNG)
 
 本システムを利用するためには、[CurationmapStarter](https://github.com/JotaroAbe/CurationmapStarter)を参照してください。
 
