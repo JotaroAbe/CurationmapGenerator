@@ -42,15 +42,15 @@ Webをはじめ、大量の文書集合を利用して情報を得る場面は�
 2. テキスト断片毎に他の文書との関連性を計算
 3. リンク構造から同一観点と推定されるテキスト断片同士を併合
 
-![a1](images/a1.png)
+![a1](./images/a1.png)
 
 各テキスト断片が異なる文書とのリンクを持つ文書をまとめ文書とし、それを自動的に推定する。
 
-![a2](images/a2.png)
+![a2](./images/a2.png)
 
 まとめ文書推定アルゴリズム（HITSアルゴリズム）
 
-![m](images/m.png)
+![m](./images/m.png)
 
 ## 構成
 
@@ -67,20 +67,20 @@ Webをはじめ、大量の文書集合を利用して情報を得る場面は�
 - [CurationmapDataStructure](https://github.com/JotaroAbe/CurationmapDataStructure)
   - キュレーションマップのデータ構造を定義
 
-![k](images/k.png)
+![k](./images/k.png)
 
 本システムを利用するためには、[CurationmapStarter](https://github.com/JotaroAbe/CurationmapStarter)を参照してください。
 
 ## スクリーンショット
 
-![ss1](images/1.png)
+![ss1](./images/1.png)
 ↑左がまとめ文書、右が詳細文章群
 
-![ss2](images/2.png)
+![ss2](./images/2.png)
 ↑まとめ文書らしさの指標に基づいて文書がランキングされている
 
-![ss3](images/3.png)
+![ss3](./images/3.png)
 ↑テキスト断片をクリックするとリンク先を表示
 
-![ss4](images/4.png)
+![ss4](./images/4.png)
 ↑詳細文章をクリックすると、その詳細文章が含まれる文書をまとめ文書として表示
